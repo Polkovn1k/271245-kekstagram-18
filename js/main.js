@@ -50,11 +50,12 @@ var getRandomNum = function (max, min) {
 };
 
 var makeEntity = function (imgName) {
-  var tempObj = {};
-  tempObj.url = setUrl(imgName);
-  tempObj.description = setTextProp(descriptionMock, COMMENTS_I_DESCR_SPREAD.max);
-  tempObj.likes = setLikes(LIKES_SPREAD.max, LIKES_SPREAD.min);
-  tempObj.comments = setCommentsObj();
+  var tempObj = {
+    url: 'photos/' + imgName + '.jpg',
+    description: setTextProp(descriptionMock),
+    likes: setLikes(LIKES_SPREAD.max, LIKES_SPREAD.min),
+    comments: setCommentsArray(),
+  };
   return tempObj;
 };
 
@@ -64,26 +65,22 @@ var pushEntityToArray = function (entityArr) {
   }
 };
 
-var setUrl = function (imgName) {
-  return 'photos/' + imgName + '.jpg';
-};
-
-var setTextProp = function (textArray, arrayLimit) {
-  var limit = getRandomNum(arrayLimit);
+var setTextProp = function (textArray) {
   var length = textArray.length;
-  var unitedString = '';
-  for (var i = 0; i <= limit; i++) {
-    unitedString = unitedString + textArray[getRandomNum(length)] + ' ';
-  }
-  return unitedString.trim();
+  return textArray[getRandomNum(length)].trim();
 };
 
-var setCommentsObj = function () {
-  var comentEntity = {};
-  comentEntity.avatar = 'img/avatar-' + getRandomNum(AVATARS_COUNT, 1) + '.svg';
-  comentEntity.message = setTextProp(commentsMock, COMMENTS_I_DESCR_SPREAD.max);
-  comentEntity.name = setTextProp(names, 1);
-  return comentEntity;
+var setCommentsArray = function () {
+  var tempArray = [];
+  for (var a = 0; a <= getRandomNum(COMMENTS_I_DESCR_SPREAD.max); a++) {
+    var comentEntity = {
+      avatar: 'img/avatar-' + getRandomNum(AVATARS_COUNT, 1) + '.svg',
+      message: setTextProp(commentsMock),
+      name: setTextProp(names),
+    };
+    tempArray.push(comentEntity);
+  }
+  return tempArray;
 };
 
 var setLikes = function (max, min) {
@@ -91,3 +88,20 @@ var setLikes = function (max, min) {
 };
 
 pushEntityToArray(entity);
+
+var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+var fragment = document.createDocumentFragment();
+
+var renderPhoto = function (photoArr) {
+  var photoElement = similarPhotoTemplate.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = photoArr.url;
+  photoElement.querySelector('.picture__likes').textContent = photoArr.likes;
+  photoElement.querySelector('.picture__comments').textContent = photoArr.comments.length;
+  return photoElement;
+};
+
+for (var e = 0; e < entity.length; e++) {
+  fragment.appendChild(renderPhoto(entity[e]));
+}
+
+document.querySelector('.pictures').appendChild(fragment);
