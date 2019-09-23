@@ -90,7 +90,6 @@ var setLikes = function (max, min) {
 pushEntityToArray(entity);
 
 var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-var fragment = document.createDocumentFragment();
 
 var renderPhoto = function (photoArr) {
   var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -100,8 +99,48 @@ var renderPhoto = function (photoArr) {
   return photoElement;
 };
 
-for (var e = 0; e < entity.length; e++) {
-  fragment.appendChild(renderPhoto(entity[e]));
-}
+var appendPhotos = function (arr, appentTo) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderPhoto(arr[i]));
+  }
+  document.querySelector(appentTo).appendChild(fragment);
+};
+appendPhotos(entity, '.pictures');
 
-document.querySelector('.pictures').appendChild(fragment);
+var photoBlock = document.querySelector('.big-picture');
+var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
+
+var renderBigPhoto = function (photoElement, photoArr) {
+  var length = photoArr.length;
+  var elementFromArr = getRandomNum(length);
+  photoElement.querySelector('.big-picture__img').src = photoArr[elementFromArr].url;
+  photoElement.querySelector('.likes-count').textContent = photoArr[elementFromArr].likes;
+  photoElement.querySelector('.social__caption').textContent = photoArr[elementFromArr].description;
+  photoElement.querySelector('.comments-count').textContent = photoArr[elementFromArr].comments.length;
+  return photoArr[elementFromArr].comments;
+};
+
+var arrComments = renderBigPhoto(photoBlock, entity);
+
+var renderComents = function (commentsArr, template) {
+  var nodeElement = template.cloneNode(true);
+  var img = nodeElement.querySelector('.social__picture');
+  img.src = commentsArr.avatar;
+  img.alt = commentsArr.name;
+  nodeElement.querySelector('.social__text').textContent = commentsArr.message;
+  return nodeElement;
+};
+
+var appendComments = function (nodeElements, appentTo) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < nodeElements.length; i++) {
+    fragment.appendChild(renderComents(nodeElements[i], commentBlock));
+  }
+  document.querySelector(appentTo).appendChild(fragment);
+};
+appendComments(arrComments, '.social__comments');
+
+photoBlock.classList.remove('hidden');
+document.querySelector('.social__comment-count').classList.add('visually-hidden');
+document.querySelector('.comments-loader').classList.add('visually-hidden');
