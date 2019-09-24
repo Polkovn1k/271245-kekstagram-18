@@ -99,14 +99,15 @@ var renderPhoto = function (photoArr) {
   return photoElement;
 };
 
-var appendPhotos = function (arr, appentTo) {
+var picturesContainer = document.querySelector('.pictures');
+var appendPhotos = function (arr) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
     fragment.appendChild(renderPhoto(arr[i]));
   }
-  document.querySelector(appentTo).appendChild(fragment);
+  picturesContainer.appendChild(fragment);
 };
-appendPhotos(entity, '.pictures');
+appendPhotos(entity);
 
 var photoBlock = document.querySelector('.big-picture');
 var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
@@ -123,8 +124,8 @@ var renderBigPhoto = function (photoElement, photoArr) {
 
 var arrComments = renderBigPhoto(photoBlock, entity);
 
-var renderComents = function (commentsArr, template) {
-  var nodeElement = template.cloneNode(true);
+var renderComments = function (commentsArr) {
+  var nodeElement = commentBlock.cloneNode(true);
   var img = nodeElement.querySelector('.social__picture');
   img.src = commentsArr.avatar;
   img.alt = commentsArr.name;
@@ -132,14 +133,15 @@ var renderComents = function (commentsArr, template) {
   return nodeElement;
 };
 
-var appendComments = function (nodeElements, appentTo) {
+var socialComments = document.querySelector('.social__comments');
+var appendComments = function (nodeElements) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < nodeElements.length; i++) {
-    fragment.appendChild(renderComents(nodeElements[i], commentBlock));
+    fragment.appendChild(renderComments(nodeElements[i]));
   }
-  document.querySelector(appentTo).appendChild(fragment);
+  socialComments.appendChild(fragment);
 };
-appendComments(arrComments, '.social__comments');
+appendComments(arrComments);
 
 photoBlock.classList.remove('hidden');
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
