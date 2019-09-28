@@ -112,17 +112,19 @@ appendPhotos(entity);
 var photoBlock = document.querySelector('.big-picture');
 var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
 
-var renderBigPhoto = function (photoElement, photoArr) {
-  var length = photoArr.length;
-  var elementFromArr = getRandomNum(length);
-  photoElement.querySelector('.big-picture__img').src = photoArr[elementFromArr].url;
-  photoElement.querySelector('.likes-count').textContent = photoArr[elementFromArr].likes;
-  photoElement.querySelector('.social__caption').textContent = photoArr[elementFromArr].description;
-  photoElement.querySelector('.comments-count').textContent = photoArr[elementFromArr].comments.length;
+var length = entity.length;
+var elementFromArr = getRandomNum(length);
+
+var renderBigPhoto = function (photoArr) {
+  console.log(photoArr[elementFromArr].comments);
+  photoBlock.querySelector('.big-picture__img').src = photoArr[elementFromArr].url;
+  photoBlock.querySelector('.likes-count').textContent = photoArr[elementFromArr].likes;
+  photoBlock.querySelector('.social__caption').textContent = photoArr[elementFromArr].description;
+  photoBlock.querySelector('.comments-count').textContent = photoArr[elementFromArr].comments.length;
   return photoArr[elementFromArr].comments;
 };
 
-var arrComments = renderBigPhoto(photoBlock, entity);
+var arrComments = renderBigPhoto(entity);
 
 var renderComments = function (commentsArr) {
   var nodeElement = commentBlock.cloneNode(true);
