@@ -90,7 +90,6 @@ var setLikes = function (max, min) {
 pushEntityToArray(entity);
 
 var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-var fragment = document.createDocumentFragment();
 
 var renderPhoto = function (photoArr) {
   var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -100,8 +99,50 @@ var renderPhoto = function (photoArr) {
   return photoElement;
 };
 
-for (var e = 0; e < entity.length; e++) {
-  fragment.appendChild(renderPhoto(entity[e]));
-}
+var picturesContainer = document.querySelector('.pictures');
+var appendPhotos = function (arr) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderPhoto(arr[i]));
+  }
+  picturesContainer.appendChild(fragment);
+};
+appendPhotos(entity);
 
-document.querySelector('.pictures').appendChild(fragment);
+var photoBlock = document.querySelector('.big-picture');
+var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
+
+var length = entity.length;
+var elementFromArr = getRandomNum(length);
+
+var renderComments = function (commentsArr) {
+  var nodeElement = commentBlock.cloneNode(true);
+  var img = nodeElement.querySelector('.social__picture');
+  img.src = commentsArr.avatar;
+  img.alt = commentsArr.name;
+  nodeElement.querySelector('.social__text').textContent = commentsArr.message;
+  return nodeElement;
+};
+
+var socialComments = document.querySelector('.social__comments');
+var appendComments = function (nodeElements) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < nodeElements.length; i++) {
+    fragment.appendChild(renderComments(nodeElements[i]));
+  }
+  socialComments.appendChild(fragment);
+};
+
+var renderBigPhoto = function (photo) {
+  photoBlock.querySelector('.big-picture__img').src = photo.url;
+  photoBlock.querySelector('.likes-count').textContent = photo.likes;
+  photoBlock.querySelector('.social__caption').textContent = photo.description;
+  photoBlock.querySelector('.comments-count').textContent = photo.comments.length;
+  appendComments(photo.comments);
+};
+
+renderBigPhoto(entity[elementFromArr]);
+
+photoBlock.classList.remove('hidden');
+document.querySelector('.social__comment-count').classList.add('visually-hidden');
+document.querySelector('.comments-loader').classList.add('visually-hidden');
