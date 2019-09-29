@@ -193,24 +193,25 @@ var scaleDown = imgUploadOverlay.querySelector('.scale__control--smaller');
 var scaleUp = imgUploadOverlay.querySelector('.scale__control--bigger');
 var scaleInput = imgUploadOverlay.querySelector('.scale__control--value');
 
-var smallerBtnClickHandler = function () {
+var getScaleValue = function (operationType) {
   var scaleValue = +scaleInput.value.substring(0, scaleInput.value.length - 1);
-  if (scaleValue < 25) {
-    scaleValue = 0;
+  if (operationType === 'smaller') {
+    scaleValue = (scaleValue < 25) ? 0 : scaleValue - 25;
+    return scaleValue;
   } else {
-    scaleValue -= 25;
+    scaleValue = (scaleValue > 75) ? 100 : scaleValue + 25;
+    return scaleValue;
   }
+};
+
+var smallerBtnClickHandler = function () {
+  var scaleValue = getScaleValue('smaller');
   imgScale(scaleValue);
   scaleInput.value = scaleValue + '%';
 };
 
 var biggerBtnClickHandler = function () {
-  var scaleValue = +scaleInput.value.substring(0, scaleInput.value.length - 1);
-  if (scaleValue > 75) {
-    scaleValue = 100;
-  } else {
-    scaleValue += 25;
-  }
+  var scaleValue = getScaleValue('bigger');
   imgScale(scaleValue);
   scaleInput.value = scaleValue + '%';
 };
