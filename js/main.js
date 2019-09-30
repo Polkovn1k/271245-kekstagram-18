@@ -228,24 +228,9 @@ scaleUp.addEventListener('click', biggerBtnClickHandler);
 uploadInput.addEventListener('change', inputChangeHandler);
 uploadOverlayClose.addEventListener('click', closeImgUploadOverlay);
 
-//------------------EFFECTS
+//------------------EFFECTS & INTENSITY
 
 var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
-
-var setImgEffect = function () {
-  for (var i = 0; i < effectsRadio.length; i++) {
-    effectsRadio[i].addEventListener('change', radioChangeHandler);
-  }
-};
-
-var radioChangeHandler = function () {
-  uploadedImg.className = 'effects__preview--' + this.value;
-};
-
-setImgEffect();
-
-//------------------INTENSITY
-
 var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
 var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
 var effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
@@ -293,3 +278,18 @@ effectLevelPin.addEventListener('mouseup', function () {
   setEffectLevel(handlePosition);
   setEffectForImg(handlePosition);
 });
+
+var setImgEffect = function () {
+  for (var i = 0; i < effectsRadio.length; i++) {
+    effectsRadio[i].addEventListener('change', radioChangeHandler);
+  }
+};
+
+var radioChangeHandler = function () {
+  uploadedImg.className = 'effects__preview--' + this.value;
+  var handlePosition = 100;
+  setEffectLevel(handlePosition);
+  setEffectForImg(handlePosition);
+};
+
+setImgEffect();
