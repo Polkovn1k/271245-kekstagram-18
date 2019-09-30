@@ -293,3 +293,45 @@ var radioChangeHandler = function () {
 };
 
 setImgEffect();
+
+//------------------INPUT VALIDATION
+
+var hashInput = imgUploadOverlay.querySelector('.text__hashtags');
+var MAX_HASH_TAGS = 5;
+var wordsArr = [];
+
+var getWordsArr = function () {
+  wordsArr = hashInput.value.toLowerCase().split(' ');
+};
+
+var checkValidity = function () {
+  if (wordsArr.length > MAX_HASH_TAGS) {
+    hashInput.setCustomValidity('Не более 5 хэш-тегов');
+  } else {
+    hashInput.setCustomValidity('');
+  }
+};
+
+hashInput.addEventListener('input', function () {
+  getWordsArr();
+  checkValidity();
+});
+
+hashInput.addEventListener('invalid', function () {
+  checkValidity();
+});
+
+/*
+hashInput.addEventListener('invalid', function (evt) {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});*/
+
+
