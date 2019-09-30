@@ -146,6 +146,8 @@ renderBigPhoto(entity[elementFromArr]);
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
 
+//------------------SCALE
+
 var keyCodes = {
   ESC: 27,
   ENTER: 13,
@@ -225,3 +227,19 @@ scaleUp.addEventListener('click', biggerBtnClickHandler);
 
 uploadInput.addEventListener('change', inputChangeHandler);
 uploadOverlayClose.addEventListener('click', closeImgUploadOverlay);
+
+//------------------EFFECTS
+
+var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
+
+var setImgEffect = function () {
+  for (var i = 0; i < effectsRadio.length; i++) {
+    effectsRadio[i].addEventListener('change', radioChangeHandler);
+  }
+};
+
+var radioChangeHandler = function () {
+  uploadedImg.className = 'effects__preview--' + this.value;
+};
+
+setImgEffect();
