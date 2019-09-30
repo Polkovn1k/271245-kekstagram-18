@@ -195,27 +195,23 @@ var scaleDown = imgUploadOverlay.querySelector('.scale__control--smaller');
 var scaleUp = imgUploadOverlay.querySelector('.scale__control--bigger');
 var scaleInput = imgUploadOverlay.querySelector('.scale__control--value');
 
-var getScaleValue = function (operationType) {
+var updateScaleValue = function (operationType) {
   var scaleValue = +scaleInput.value.substring(0, scaleInput.value.length - 1);
   if (operationType === 'smaller') {
     scaleValue = (scaleValue < 25) ? 0 : scaleValue - 25;
-    return scaleValue;
   } else {
     scaleValue = (scaleValue > 75) ? 100 : scaleValue + 25;
-    return scaleValue;
   }
+  imgScale(scaleValue);
+  scaleInput.value = scaleValue + '%';
 };
 
 var smallerBtnClickHandler = function () {
-  var scaleValue = getScaleValue('smaller');
-  imgScale(scaleValue);
-  scaleInput.value = scaleValue + '%';
+  var scaleValue = updateScaleValue('smaller');
 };
 
 var biggerBtnClickHandler = function () {
-  var scaleValue = getScaleValue('bigger');
-  imgScale(scaleValue);
-  scaleInput.value = scaleValue + '%';
+  var scaleValue = updateScaleValue('bigger');
 };
 
 var imgScale = function (value) {
@@ -275,10 +271,14 @@ var setEffectForImg = function (number) {
   }
 };
 
-effectLevelPin.addEventListener('mouseup', function () {
-  var handlePosition = pinPosition();
+var setValues = function (numtype) {
+  var handlePosition = numtype;
   setEffectLevel(handlePosition);
   setEffectForImg(handlePosition);
+};
+
+effectLevelPin.addEventListener('mouseup', function () {
+  setValues(pinPosition());
 });
 
 var setImgEffect = function () {
@@ -289,9 +289,7 @@ var setImgEffect = function () {
 
 var radioChangeHandler = function () {
   uploadedImg.className = 'effects__preview--' + this.value;
-  var handlePosition = EFFECT_DEFAULT_VAL;
-  setEffectLevel(handlePosition);
-  setEffectForImg(handlePosition);
+  setValues(EFFECT_DEFAULT_VAL);
 };
 
 setImgEffect();
