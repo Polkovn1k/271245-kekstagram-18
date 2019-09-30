@@ -234,6 +234,7 @@ var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
 var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
 var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
 var effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+var EFFECT_DEFAULT_VAL = 100;
 
 var pinPosition = function () {
   return effectLevelPin.offsetLeft / effectLevelLine.scrollWidth * 100;
@@ -287,7 +288,7 @@ var setImgEffect = function () {
 
 var radioChangeHandler = function () {
   uploadedImg.className = 'effects__preview--' + this.value;
-  var handlePosition = 100;
+  var handlePosition = EFFECT_DEFAULT_VAL;
   setEffectLevel(handlePosition);
   setEffectForImg(handlePosition);
 };
