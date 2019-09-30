@@ -243,3 +243,53 @@ var radioChangeHandler = function () {
 };
 
 setImgEffect();
+
+//------------------INTENSITY
+
+var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
+var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
+var effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+
+var pinPosition = function () {
+  return effectLevelPin.offsetLeft / effectLevelLine.scrollWidth * 100;
+};
+
+var setEffectLevel = function (number) {
+  effectLevelValue.value = number;
+};
+
+var getCheckedInput = function () {
+  for (var i = 0; i < effectsRadio.length; i++) {
+    if (effectsRadio[i].checked) return effectsRadio[i].value;
+  }
+};
+
+var setEffectForImg = function (number) {
+  var filterType = getCheckedInput();
+  switch (filterType) {
+    case 'none':
+      uploadedImg.style.filter = 'none';
+      break;
+    case 'chrome':
+      uploadedImg.style.filter = 'grayscale(' + number / 100 + ')';
+      break;
+    case 'sepia':
+      uploadedImg.style.filter = 'sepia(' + number / 100 + ')';
+      break;
+    case 'marvin':
+      uploadedImg.style.filter = 'invert(' + number + '%)';
+      break;
+    case 'phobos':
+      uploadedImg.style.filter = 'blur(' + number * (3 / 100) + 'px)';
+      break;
+    case 'heat':
+      uploadedImg.style.filter = 'brightness(' + number * (3 / 100) + ')';
+      break;
+  }
+};
+
+effectLevelPin.addEventListener('mouseup', function () {
+  var handlePosition = pinPosition();
+  setEffectLevel(handlePosition);
+  setEffectForImg(handlePosition);
+});
