@@ -297,27 +297,51 @@ setImgEffect();
 //------------------INPUT VALIDATION
 
 var hashInput = imgUploadOverlay.querySelector('.text__hashtags');
+var imgForm = document.querySelector('.img-upload__form');
 var MAX_HASH_TAGS = 5;
+var MIN_HASH_LENGTH = 2;
+var MAX_HASH_LENGTH = 20;
 var wordsArr = [];
+var invalidMessage;
 
 var getWordsArr = function () {
-  wordsArr = hashInput.value.toLowerCase().split(' ');
+  wordsArr = hashInput.value.toLowerCase().trim().split(' ');
+};
+
+var getInvalidMessage = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].charAt(0) !== '#') {
+      return 'Хэш-теги должны начинаться с символа #';
+    }
+    if (arr[i].length < MIN_HASH_LENGTH) {
+      return 'Длина хэш-тега не может быть меньше ' + MIN_HASH_LENGTH;
+    }
+    if (arr[i].length > MAX_HASH_LENGTH) {
+      return 'Длина хэш-тега не может быть больше ' + MAX_HASH_LENGTH;
+    }
+  }
+  if (arr.length > MAX_HASH_TAGS) {
+    return 'Не более' + MAX_HASH_TAGS + 'хэш-тегов';
+  }
+  return '';
 };
 
 var checkValidity = function () {
-  if (wordsArr.length > MAX_HASH_TAGS) {
-    hashInput.setCustomValidity('Не более 5 хэш-тегов');
-  } else {
-    hashInput.setCustomValidity('');
-  }
+  invalidMessage = getInvalidMessage(wordsArr);
+  hashInput.setCustomValidity(invalidMessage);
 };
 
-hashInput.addEventListener('input', function () {
+/*hashInput.addEventListener('input', function () {
   getWordsArr();
   checkValidity();
-});
+});*/
 
 hashInput.addEventListener('invalid', function () {
+  //checkValidity();
+});
+
+imgForm.addEventListener('submit', function (evt) {
+  getWordsArr();
   checkValidity();
 });
 
