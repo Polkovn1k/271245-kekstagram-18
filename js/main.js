@@ -255,6 +255,7 @@ var setEffectForImg = function (number) {
   switch (filterType) {
     case 'none':
       uploadedImg.style.filter = 'none';
+      closeImgUploadOverlay();
       break;
     case 'chrome':
       uploadedImg.style.filter = 'grayscale(' + number / 100 + ')';
