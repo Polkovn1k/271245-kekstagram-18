@@ -308,6 +308,19 @@ var getWordsArr = function () {
   wordsArr = hashInput.value.toLowerCase().trim().split(' ');
 };
 
+let wordsDublicate = function () {
+  var haveDublie;
+  var newArr = wordsArr.forEach(function(item, index, array) {
+    for (var i = index + 1; i < wordsArr.length; i++) {
+      if (item === wordsArr[i]) {
+        haveDublie = true;
+        break;
+      }
+    }
+  });
+  return haveDublie;
+}
+
 var getInvalidMessage = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     if (arr[i].charAt(0) !== '#') {
@@ -321,7 +334,10 @@ var getInvalidMessage = function (arr) {
     }
   }
   if (arr.length > MAX_HASH_TAGS) {
-    return 'Не более' + MAX_HASH_TAGS + 'хэш-тегов';
+    return 'Не более ' + MAX_HASH_TAGS + ' хэш-тегов';
+  }
+  if (wordsDublicate()) {
+    return 'У вас есть одинаковые хэш-теги!';
   }
   return '';
 };
@@ -331,19 +347,30 @@ var checkValidity = function () {
   hashInput.setCustomValidity(invalidMessage);
 };
 
-/*hashInput.addEventListener('input', function () {
+hashInput.addEventListener('input', function () {
   getWordsArr();
   checkValidity();
+});
+
+/*imgForm.addEventListener('submit', function (evt) {
+  getWordsArr();
+  console.log(wordsArr);
+  checkValidity();
+  evt.preventDefault();
 });*/
 
-hashInput.addEventListener('invalid', function () {
-  //checkValidity();
-});
 
-imgForm.addEventListener('submit', function (evt) {
+
+
+
+
+/*imgForm.addEventListener('submit', function (evt) {
+  console.dir(hashInput.validity.valid);
   getWordsArr();
   checkValidity();
-});
+  evt.preventDefault();
+  console.dir(hashInput.validity.valid);
+});*/
 
 /*
 hashInput.addEventListener('invalid', function (evt) {
@@ -356,6 +383,10 @@ hashInput.addEventListener('invalid', function (evt) {
   } else {
     userNameInput.setCustomValidity('');
   }
+});*/
+
+/*hashInput.addEventListener('invalid', function () {
+  checkValidity();
 });*/
 
 
