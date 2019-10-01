@@ -301,8 +301,8 @@ var hashTextArea = imgUploadOverlay.querySelector('.text__description');
 var MAX_HASH_TAGS = 5;
 var MIN_HASH_LENGTH = 2;
 var MAX_HASH_LENGTH = 20;
+var MAX_COMMENT_LENGTH = 140;
 var wordsArr = [];
-var invalidMessage;
 
 var getWordsArr = function () {
   wordsArr = hashInput.value.toLowerCase().trim().split(' ');
@@ -321,7 +321,7 @@ var wordsDublicate = function () {
   return haveDublie;
 }
 
-var getInvalidMessage = function (arr) {
+var getInvalidTags = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     if (arr[i].charAt(0) !== '#') {
       return 'Хэш-теги должны начинаться с символа #';
@@ -342,23 +342,40 @@ var getInvalidMessage = function (arr) {
   return '';
 };
 
+var getInvalidComment = function () {
+  if (hashTextArea.value.length > MAX_COMMENT_LENGTH) {
+    return 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
+  }
+  return '';
+};
+
 hashInput.addEventListener('blur', function () {
-    document.addEventListener('keydown', documentKeydownHandler);
+  document.addEventListener('keydown', documentKeydownHandler);
 });
 
 hashInput.addEventListener('focus', function () {
-    document.removeEventListener('keydown', documentKeydownHandler);
+  document.removeEventListener('keydown', documentKeydownHandler);
 });
 
 hashTextArea.addEventListener('focus', function () {
-    document.removeEventListener('keydown', documentKeydownHandler);
+  document.removeEventListener('keydown', documentKeydownHandler);
 });
 
 hashTextArea.addEventListener('blur', function () {
-    document.addEventListener('keydown', documentKeydownHandler);
+  document.addEventListener('keydown', documentKeydownHandler);
 });
 
 var checkValidity = function () {
-  invalidMessage = getInvalidMessage(wordsArr);
-  hashInput.setCustomValidity(invalidMessage);
+  var invalidTagsMessage = getInvalidTags(wordsArr);
+  hashInput.setCustomValidity(invalidTagsMessage);
 };
+
+hashInput.addEventListener('input', function () {
+  getWordsArr();
+  checkValidity();
+});
+
+hashTextArea.addEventListener('input', function () {
+  var invalidCommentMessage = getInvalidComment();
+  hashTextArea.setCustomValidity(invalidCommentMessage);
+});
