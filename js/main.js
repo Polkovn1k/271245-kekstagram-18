@@ -146,8 +146,6 @@ renderBigPhoto(entity[elementFromArr]);
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-//------------------SCALE
-
 var keyCodes = {
   ESC: 27,
   ENTER: 13,
@@ -207,11 +205,11 @@ var updateScaleValue = function (operationType) {
 };
 
 var smallerBtnClickHandler = function () {
-  var scaleValue = updateScaleValue('smaller');
+  updateScaleValue('smaller');
 };
 
 var biggerBtnClickHandler = function () {
-  var scaleValue = updateScaleValue('bigger');
+  updateScaleValue('bigger');
 };
 
 var imgScale = function (value) {
@@ -223,8 +221,6 @@ scaleUp.addEventListener('click', biggerBtnClickHandler);
 
 uploadInput.addEventListener('change', inputChangeHandler);
 uploadOverlayClose.addEventListener('click', closeImgUploadOverlay);
-
-//------------------EFFECTS & INTENSITY
 
 var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
 var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
@@ -242,8 +238,11 @@ var setEffectLevel = function (number) {
 
 var getCheckedInput = function () {
   for (var i = 0; i < effectsRadio.length; i++) {
-    if (effectsRadio[i].checked) return effectsRadio[i].value;
+    if (effectsRadio[i].checked) {
+      return effectsRadio[i].value;
+    }
   }
+  return false;
 };
 
 var setEffectForImg = function (number) {
@@ -288,13 +287,11 @@ var setImgEffect = function () {
 };
 
 var radioChangeHandler = function () {
-  uploadedImg.className = 'effects__preview--' + this.value;
+  uploadedImg.className = 'effects__preview--' + effectsRadio.value;
   setValues(EFFECT_DEFAULT_VAL);
 };
 
 setImgEffect();
-
-//------------------INPUT VALIDATION
 
 var hashInput = imgUploadOverlay.querySelector('.text__hashtags');
 var hashTextArea = imgUploadOverlay.querySelector('.text__description');
@@ -302,24 +299,21 @@ var MAX_HASH_TAGS = 5;
 var MIN_HASH_LENGTH = 2;
 var MAX_HASH_LENGTH = 20;
 var MAX_COMMENT_LENGTH = 140;
-var wordsArr = [];
 
 var getWordsArr = function () {
-  wordsArr = hashInput.value.toLowerCase().trim().split(' ');
+  return hashInput.value.toLowerCase().trim().split(' ');
 };
 
 var wordsDublicate = function () {
-  var haveDublie;
-  var newArr = wordsArr.forEach(function(item, index, array) {
-    for (var i = index + 1; i < wordsArr.length; i++) {
-      if (item === wordsArr[i]) {
-        haveDublie = true;
-        break;
+  for (var i = 0; i < getWordsArr().length; i++) {
+    for (var j = i + 1; j < getWordsArr().length; j++) {
+      if (getWordsArr()[i] === getWordsArr()[j]) {
+        return true;
       }
     }
-  });
-  return haveDublie;
-}
+  }
+  return false;
+};
 
 var getInvalidTags = function (arr) {
   for (var i = 0; i < arr.length; i++) {
@@ -366,7 +360,7 @@ hashTextArea.addEventListener('blur', function () {
 });
 
 var checkValidity = function () {
-  var invalidTagsMessage = getInvalidTags(wordsArr);
+  var invalidTagsMessage = getInvalidTags(getWordsArr());
   hashInput.setCustomValidity(invalidTagsMessage);
 };
 
