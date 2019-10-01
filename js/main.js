@@ -297,7 +297,7 @@ setImgEffect();
 //------------------INPUT VALIDATION
 
 var hashInput = imgUploadOverlay.querySelector('.text__hashtags');
-var imgForm = document.querySelector('.img-upload__form');
+var hashTextArea = imgUploadOverlay.querySelector('.text__description');
 var MAX_HASH_TAGS = 5;
 var MIN_HASH_LENGTH = 2;
 var MAX_HASH_LENGTH = 20;
@@ -308,7 +308,7 @@ var getWordsArr = function () {
   wordsArr = hashInput.value.toLowerCase().trim().split(' ');
 };
 
-let wordsDublicate = function () {
+var wordsDublicate = function () {
   var haveDublie;
   var newArr = wordsArr.forEach(function(item, index, array) {
     for (var i = index + 1; i < wordsArr.length; i++) {
@@ -342,51 +342,23 @@ var getInvalidMessage = function (arr) {
   return '';
 };
 
+hashInput.addEventListener('blur', function () {
+    document.addEventListener('keydown', documentKeydownHandler);
+});
+
+hashInput.addEventListener('focus', function () {
+    document.removeEventListener('keydown', documentKeydownHandler);
+});
+
+hashTextArea.addEventListener('focus', function () {
+    document.removeEventListener('keydown', documentKeydownHandler);
+});
+
+hashTextArea.addEventListener('blur', function () {
+    document.addEventListener('keydown', documentKeydownHandler);
+});
+
 var checkValidity = function () {
   invalidMessage = getInvalidMessage(wordsArr);
   hashInput.setCustomValidity(invalidMessage);
 };
-
-hashInput.addEventListener('input', function () {
-  getWordsArr();
-  checkValidity();
-});
-
-/*imgForm.addEventListener('submit', function (evt) {
-  getWordsArr();
-  console.log(wordsArr);
-  checkValidity();
-  evt.preventDefault();
-});*/
-
-
-
-
-
-
-/*imgForm.addEventListener('submit', function (evt) {
-  console.dir(hashInput.validity.valid);
-  getWordsArr();
-  checkValidity();
-  evt.preventDefault();
-  console.dir(hashInput.validity.valid);
-});*/
-
-/*
-hashInput.addEventListener('invalid', function (evt) {
-  if (userNameInput.validity.tooShort) {
-    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else if (userNameInput.validity.tooLong) {
-    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
-  } else if (userNameInput.validity.valueMissing) {
-    userNameInput.setCustomValidity('Обязательное поле');
-  } else {
-    userNameInput.setCustomValidity('');
-  }
-});*/
-
-/*hashInput.addEventListener('invalid', function () {
-  checkValidity();
-});*/
-
-
