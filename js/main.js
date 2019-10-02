@@ -42,13 +42,6 @@ var names = [
   'Маруся',
 ];
 
-var getRandomNum = function (max, min) {
-  if (min === undefined) {
-    min = 0;
-  }
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
 var makeEntity = function (imgName) {
   var tempObj = {
     url: 'photos/' + imgName + '.jpg',
@@ -67,14 +60,14 @@ var pushEntityToArray = function (entityArr) {
 
 var setTextProp = function (textArray) {
   var length = textArray.length;
-  return textArray[getRandomNum(length)].trim();
+  return textArray[window.getRandomNum(length)].trim();
 };
 
 var setCommentsArray = function () {
   var tempArray = [];
-  for (var a = 0; a <= getRandomNum(COMMENTS_I_DESCR_SPREAD.max); a++) {
+  for (var a = 0; a <= window.getRandomNum(COMMENTS_I_DESCR_SPREAD.max); a++) {
     var comentEntity = {
-      avatar: 'img/avatar-' + getRandomNum(AVATARS_COUNT, 1) + '.svg',
+      avatar: 'img/avatar-' + window.getRandomNum(AVATARS_COUNT, 1) + '.svg',
       message: setTextProp(commentsMock),
       name: setTextProp(names),
     };
@@ -84,7 +77,7 @@ var setCommentsArray = function () {
 };
 
 var setLikes = function (max, min) {
-  return getRandomNum(max, min);
+  return window.getRandomNum(max, min);
 };
 
 pushEntityToArray(entity);
@@ -113,7 +106,7 @@ var photoBlock = document.querySelector('.big-picture');
 var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
 
 var length = entity.length;
-var elementFromArr = getRandomNum(length);
+var elementFromArr = window.getRandomNum(length);
 
 var renderComments = function (commentsArr) {
   var nodeElement = commentBlock.cloneNode(true);
@@ -145,6 +138,7 @@ renderBigPhoto(entity[elementFromArr]);
 
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
+/*
 
 var keyCodes = {
   ESC: 27,
@@ -373,3 +367,4 @@ hashTextArea.addEventListener('input', function () {
   var invalidCommentMessage = getInvalidComment();
   hashTextArea.setCustomValidity(invalidCommentMessage);
 });
+*/
