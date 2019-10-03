@@ -40,7 +40,6 @@
     }
     return '';
   };
-  
   var getInvalidComment = function () {
     if (hashTextArea.value.length > MAX_COMMENT_LENGTH) {
       return 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
