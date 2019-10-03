@@ -42,13 +42,6 @@ var names = [
   'Маруся',
 ];
 
-var getRandomNum = function (max, min) {
-  if (min === undefined) {
-    min = 0;
-  }
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
 var makeEntity = function (imgName) {
   var tempObj = {
     url: 'photos/' + imgName + '.jpg',
@@ -67,14 +60,14 @@ var pushEntityToArray = function (entityArr) {
 
 var setTextProp = function (textArray) {
   var length = textArray.length;
-  return textArray[getRandomNum(length)].trim();
+  return textArray[window.utils.getRandomNum(length)].trim();
 };
 
 var setCommentsArray = function () {
   var tempArray = [];
-  for (var a = 0; a <= getRandomNum(COMMENTS_I_DESCR_SPREAD.max); a++) {
+  for (var a = 0; a <= window.utils.getRandomNum(COMMENTS_I_DESCR_SPREAD.max); a++) {
     var comentEntity = {
-      avatar: 'img/avatar-' + getRandomNum(AVATARS_COUNT, 1) + '.svg',
+      avatar: 'img/avatar-' + window.utils.getRandomNum(AVATARS_COUNT, 1) + '.svg',
       message: setTextProp(commentsMock),
       name: setTextProp(names),
     };
@@ -84,7 +77,7 @@ var setCommentsArray = function () {
 };
 
 var setLikes = function (max, min) {
-  return getRandomNum(max, min);
+  return window.utils.getRandomNum(max, min);
 };
 
 pushEntityToArray(entity);
@@ -113,7 +106,7 @@ var photoBlock = document.querySelector('.big-picture');
 var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
 
 var length = entity.length;
-var elementFromArr = getRandomNum(length);
+var elementFromArr = window.utils.getRandomNum(length);
 
 var renderComments = function (commentsArr) {
   var nodeElement = commentBlock.cloneNode(true);
@@ -146,52 +139,29 @@ renderBigPhoto(entity[elementFromArr]);
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-var keyCodes = {
-  ESC: 27,
-  ENTER: 13,
-};
-var uploadInput = document.querySelector('.img-upload__input');
 var uploadInputLabel = document.querySelector('.img-upload__label');
-var imgUploadOverlay = document.querySelector('.img-upload__overlay');
-var uploadOverlayClose = imgUploadOverlay.querySelector('.img-upload__cancel');
-var uploadedImg = imgUploadOverlay.querySelector('.img-upload__preview img');
-
-var documentKeydownHandler = function (evt) {
-  if (evt.keyCode === keyCodes.ESC) {
-    closeImgUploadOverlay();
-  }
-};
-
-var openImgUploadOverlay = function () {
-  imgUploadOverlay.classList.remove('hidden');
-  document.addEventListener('keydown', documentKeydownHandler);
-};
-
-var closeImgUploadOverlay = function () {
-  imgUploadOverlay.classList.add('hidden');
-  uploadInput.value = '';
-  document.removeEventListener('keydown', documentKeydownHandler);
-};
+var uploadOverlayClose = window.data.imgUploadOverlay.querySelector('.img-upload__cancel');
+var uploadedImg = window.data.imgUploadOverlay.querySelector('.img-upload__preview img');
 
 var inputChangeHandler = function () {
-  openImgUploadOverlay();
+  window.utils.openImgUploadOverlay();
 };
 
 uploadInputLabel.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === keyCodes.ENTER) {
-    openImgUploadOverlay();
+  if (evt.keyCode === window.data.KEY_CODE_ENTER) {
+    window.utils.openImgUploadOverlay();
   }
 });
 
 uploadOverlayClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === keyCodes.ENTER) {
-    closeImgUploadOverlay();
+  if (evt.keyCode === window.data.KEY_CODE_ENTER) {
+    window.utils.closeImgUploadOverlay();
   }
 });
 
-var scaleDown = imgUploadOverlay.querySelector('.scale__control--smaller');
-var scaleUp = imgUploadOverlay.querySelector('.scale__control--bigger');
-var scaleInput = imgUploadOverlay.querySelector('.scale__control--value');
+var scaleDown = window.data.imgUploadOverlay.querySelector('.scale__control--smaller');
+var scaleUp = window.data.imgUploadOverlay.querySelector('.scale__control--bigger');
+var scaleInput = window.data.imgUploadOverlay.querySelector('.scale__control--value');
 
 var updateScaleValue = function (operationType) {
   var scaleValue = +scaleInput.value.substring(0, scaleInput.value.length - 1);
@@ -219,13 +189,13 @@ var imgScale = function (value) {
 scaleDown.addEventListener('click', smallerBtnClickHandler);
 scaleUp.addEventListener('click', biggerBtnClickHandler);
 
-uploadInput.addEventListener('change', inputChangeHandler);
-uploadOverlayClose.addEventListener('click', closeImgUploadOverlay);
+window.data.uploadInput.addEventListener('change', inputChangeHandler);
+uploadOverlayClose.addEventListener('click', window.utils.closeImgUploadOverlay);
 
-var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
-var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
-var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
-var effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+var effectsRadio = window.data.imgUploadOverlay.querySelectorAll('.effects__radio');
+var effectLevelPin = window.data.imgUploadOverlay.querySelector('.effect-level__pin');
+var effectLevelLine = window.data.imgUploadOverlay.querySelector('.effect-level__line');
+var effectLevelValue = window.data.imgUploadOverlay.querySelector('.effect-level__value');
 var EFFECT_DEFAULT_VAL = 100;
 
 var pinPosition = function () {
@@ -250,7 +220,7 @@ var setEffectForImg = function (number) {
   switch (filterType) {
     case 'none':
       uploadedImg.style.filter = 'none';
-      closeImgUploadOverlay();
+      window.utils.closeImgUploadOverlay();
       break;
     case 'chrome':
       uploadedImg.style.filter = 'grayscale(' + number / 100 + ')';
@@ -293,8 +263,8 @@ var radioChangeHandler = function () {
 
 setImgEffect();
 
-var hashInput = imgUploadOverlay.querySelector('.text__hashtags');
-var hashTextArea = imgUploadOverlay.querySelector('.text__description');
+var hashInput = window.data.imgUploadOverlay.querySelector('.text__hashtags');
+var hashTextArea = window.data.imgUploadOverlay.querySelector('.text__description');
 var MAX_HASH_TAGS = 5;
 var MIN_HASH_LENGTH = 2;
 var MAX_HASH_LENGTH = 20;
@@ -344,19 +314,19 @@ var getInvalidComment = function () {
 };
 
 hashInput.addEventListener('blur', function () {
-  document.addEventListener('keydown', documentKeydownHandler);
+  document.addEventListener('keydown', window.utils.documentKeydownHandler);
 });
 
 hashInput.addEventListener('focus', function () {
-  document.removeEventListener('keydown', documentKeydownHandler);
+  document.removeEventListener('keydown', window.utils.documentKeydownHandler);
 });
 
 hashTextArea.addEventListener('focus', function () {
-  document.removeEventListener('keydown', documentKeydownHandler);
+  document.removeEventListener('keydown', window.utils.documentKeydownHandler);
 });
 
 hashTextArea.addEventListener('blur', function () {
-  document.addEventListener('keydown', documentKeydownHandler);
+  document.addEventListener('keydown', window.utils.documentKeydownHandler);
 });
 
 var checkValidity = function () {
