@@ -1,8 +1,8 @@
 'use strict';
 
 var slidersPin = document.querySelector('.effect-level__pin');
-var fullLine = document.querySelector('.effect-level__line');
-var lineDepth = document.querySelector('.effect-level__depth');
+var fullLine = slidersPin.parentNode;
+var lineDepth = slidersPin.nextElementSibling;
 
 var changeStyle = function (shift) {
   var pinPosition = slidersPin.offsetLeft - shift;
