@@ -25,7 +25,10 @@ slidersPin.addEventListener('mousedown', function (evt) {
     movEvt.preventDefault();
     var xShift = xCoordinate - movEvt.clientX;
     xCoordinate = movEvt.clientX;
-    changeStyle(xShift);
+    if (xCoordinate > fullLine.getBoundingClientRect().left && xCoordinate < fullLine.getBoundingClientRect().right) {
+      changeStyle(xShift);
+    }
+    //console.log('Ита xCoordinate ' + xCoordinate);
   };
   var pinMouseUpHandler = function (upEvt) {
     upEvt.preventDefault();
