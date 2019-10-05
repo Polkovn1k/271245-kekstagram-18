@@ -4,7 +4,11 @@
   var slidersPin = document.querySelector('.effect-level__pin');
   var fullLine = slidersPin.parentNode;
   var lineDepth = slidersPin.nextElementSibling;
-  var changeStyle = function (shift) {
+  window.pinPositionSettings = function (shift) {
+    if (shift === undefined) {
+      setPinStyle(fullLine.offsetWidth);
+      return false;
+    }
     var pinPosition = slidersPin.offsetLeft - shift;
     slidersPin.style.left = pinPosition + 'px';
     if (slidersPin.offsetLeft < 0) {
@@ -13,6 +17,9 @@
     if (slidersPin.offsetLeft > fullLine.offsetWidth) {
       pinPosition = fullLine.offsetWidth;
     }
+    setPinStyle(pinPosition);
+  };
+  var setPinStyle = function (pinPosition) {
     slidersPin.style.left = pinPosition + 'px';
     lineDepth.style.width = pinPosition + 'px';
   };
@@ -28,7 +35,7 @@
       var xShift = xCoordinate - movEvt.clientX;
       xCoordinate = movEvt.clientX;
       if (xCoordinate > limit.leftSide && xCoordinate < limit.rightSide) {
-        changeStyle(xShift);
+        window.pinPositionSettings(xShift);
       }
     };
     var pinMouseUpHandler = function (upEvt) {
