@@ -12,6 +12,7 @@
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
   };
   var EFFECT_DEFAULT_VAL = 100;
+  var draged = false;
   var inputChangeHandler = function () {
     window.utils.openImgUploadOverlay();
   };
@@ -81,8 +82,16 @@
     setEffectLevel(handlePosition);
     setEffectForImg(handlePosition);
   };
+  nodes.effectLevelPin.addEventListener('mousedown', function () {
+    draged = true;
+  });
+  nodes.effectLevelPin.addEventListener('mousemove', function () {
+    if (draged) {
+      setValues(pinPosition());
+    }
+  });
   nodes.effectLevelPin.addEventListener('mouseup', function () {
-    setValues(pinPosition());
+    draged = false;
   });
   var setImgEffect = function () {
     for (var i = 0; i < nodes.effectsRadio.length; i++) {
