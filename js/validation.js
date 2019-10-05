@@ -51,6 +51,11 @@
     return '';
   };
 
+  var checkValidity = function () {
+    var invalidTagsMessage = getInvalidTags(getWordsArr());
+    hashInput.setCustomValidity(invalidTagsMessage);
+  };
+
   hashInput.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
@@ -66,11 +71,6 @@
   hashTextArea.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
-
-  var checkValidity = function () {
-    var invalidTagsMessage = getInvalidTags(getWordsArr());
-    hashInput.setCustomValidity(invalidTagsMessage);
-  };
 
   hashInput.addEventListener('input', function () {
     getWordsArr();
