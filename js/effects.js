@@ -13,9 +13,11 @@
   };
   var EFFECT_DEFAULT_VAL = 100;
   var draged = false;
+
   var inputChangeHandler = function () {
     window.utils.openImgUploadOverlay();
   };
+
   var updateScaleValue = function (operationType) {
     var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
     if (operationType === 'smaller') {
@@ -26,25 +28,27 @@
     imgScale(scaleValue);
     nodes.scaleInput.value = scaleValue + '%';
   };
+
   var smallerBtnClickHandler = function () {
     updateScaleValue('smaller');
   };
+
   var biggerBtnClickHandler = function () {
     updateScaleValue('bigger');
   };
+
   var imgScale = function (value) {
     nodes.uploadedImg.style.transform = 'scale(' + value / 100 + ')';
   };
-  nodes.scaleDown.addEventListener('click', smallerBtnClickHandler);
-  nodes.scaleUp.addEventListener('click', biggerBtnClickHandler);
-  window.data.uploadInput.addEventListener('change', inputChangeHandler);
-  window.data.uploadOverlayClose.addEventListener('click', window.utils.closeImgUploadOverlay);
+
   var pinPosition = function () {
     return nodes.effectLevelPin.offsetLeft / nodes.effectLevelLine.scrollWidth * 100;
   };
+
   var setEffectLevel = function (number) {
     nodes.effectLevelValue.value = number;
   };
+
   var getCheckedInput = function () {
     for (var i = 0; i < nodes.effectsRadio.length; i++) {
       if (nodes.effectsRadio[i].checked) {
@@ -53,6 +57,7 @@
     }
     return false;
   };
+
   var setEffectForImg = function (number) {
     var filterType = getCheckedInput();
     switch (filterType) {
@@ -77,31 +82,43 @@
         break;
     }
   };
+
   var setValues = function (numtype) {
     var handlePosition = numtype;
     setEffectLevel(handlePosition);
     setEffectForImg(handlePosition);
   };
-  nodes.effectLevelPin.addEventListener('mousedown', function () {
-    draged = true;
-  });
-  nodes.effectLevelPin.addEventListener('mousemove', function () {
-    if (draged) {
-      setValues(pinPosition());
-    }
-  });
-  nodes.effectLevelPin.addEventListener('mouseup', function () {
-    draged = false;
-  });
+
   var setImgEffect = function () {
     for (var i = 0; i < nodes.effectsRadio.length; i++) {
       nodes.effectsRadio[i].addEventListener('change', radioChangeHandler);
     }
   };
+
   var radioChangeHandler = function () {
     nodes.uploadedImg.className = 'effects__preview--' + nodes.effectsRadio.value;
     setValues(EFFECT_DEFAULT_VAL);
     window.pinPositionDefaultSettings();
   };
+
+  nodes.scaleDown.addEventListener('click', smallerBtnClickHandler);
+  nodes.scaleUp.addEventListener('click', biggerBtnClickHandler);
+  window.data.uploadInput.addEventListener('change', inputChangeHandler);
+  window.data.uploadOverlayClose.addEventListener('click', window.utils.closeImgUploadOverlay);
+
+  nodes.effectLevelPin.addEventListener('mousedown', function () {
+    draged = true;
+  });
+
+  nodes.effectLevelPin.addEventListener('mousemove', function () {
+    if (draged) {
+      setValues(pinPosition());
+    }
+  });
+
+  nodes.effectLevelPin.addEventListener('mouseup', function () {
+    draged = false;
+  });
+
   setImgEffect();
 })();
