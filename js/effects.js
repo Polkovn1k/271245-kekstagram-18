@@ -101,7 +101,7 @@
   var radioChangeHandler = function () {
     nodes.uploadedImg.className = 'effects__preview--' + nodes.effectsRadio.value;
     setValues(EFFECT_DEFAULT_VAL);
-    window.pinPositionSettings();
+    window.pinPositionDefaultSettings();
   };
   setImgEffect();
 })();
