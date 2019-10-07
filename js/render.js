@@ -81,5 +81,5 @@
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-  window.load('https://js.dump.academy/kekstagram/data 111111111', renderItems, logError);
+  window.load('https://js.dump.academy/kekstagram/data', renderItems, logError);
 })();

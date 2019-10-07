@@ -7,6 +7,7 @@
   var MIN_HASH_LENGTH = 2;
   var MAX_HASH_LENGTH = 20;
   var MAX_COMMENT_LENGTH = 140;
+  var INPUT_ERROR_STYLE = 'inset 0px 0px 1px 1px red';
 
   var getWordsArr = function () {
     return hashInput.value.toLowerCase().trim().split(' ');
@@ -56,6 +57,15 @@
     hashInput.setCustomValidity(invalidTagsMessage);
   };
 
+  var errorStyle = function (nodeElement) {
+    if (!nodeElement.validity.valid) {
+      nodeElement.style.boxShadow = INPUT_ERROR_STYLE;
+      return false;
+    }
+    nodeElement.style.boxShadow = 'none';
+    return false;
+  }
+
   hashInput.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
@@ -72,13 +82,28 @@
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
 
-  hashInput.addEventListener('input', function () {
+  hashInput.addEventListener('input', function (evt) {
     getWordsArr();
     checkValidity();
+    errorStyle(evt.target);
   });
 
-  hashTextArea.addEventListener('input', function () {
+  hashTextArea.addEventListener('input', function (evt) {
     var invalidCommentMessage = getInvalidComment();
     hashTextArea.setCustomValidity(invalidCommentMessage);
+    errorStyle(evt.target);
+    //console.dir();
+  });
+  
+  
+  
+  
+  
+  var form = document.querySelector('.img-upload__form');
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), function (response) {
+      console.log(11111111);
+    });
+    evt.preventDefault();
   });
 })();
