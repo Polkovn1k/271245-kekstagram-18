@@ -7,8 +7,6 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
-  var length = window.data.entity.length;
-  var elementFromArr = window.utils.getRandomNum(length);
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -52,8 +50,6 @@
     appendComments(photo.comments);
   };
 
-  appendPhotos(window.data.entity);
-  renderBigPhoto(window.data.entity[elementFromArr]);
 
   uploadInputLabel.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.KEY_CODE_ENTER) {
@@ -66,7 +62,20 @@
       window.utils.closeImgUploadOverlay();
     }
   });
+  
+  var renderItems = function (obj) {
+    var length = obj.length;
+    var getRandomElemFromArr = obj[window.utils.getRandomNum(length)];
+    appendPhotos(obj);
+    renderBigPhoto(getRandomElemFromArr);
+  };
+
+  var logError = function (errLog) {
+    console.log(errLog);
+  };
 
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
+
+  window.load('https://js.dump.academy/kekstagram/data', renderItems, logError);
 })();
