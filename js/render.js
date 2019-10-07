@@ -7,8 +7,6 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
-  var length = window.data.entity.length;
-  var elementFromArr = window.utils.getRandomNum(length);
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -52,8 +50,6 @@
     appendComments(photo.comments);
   };
 
-  appendPhotos(window.data.entity);
-  renderBigPhoto(window.data.entity[elementFromArr]);
 
   uploadInputLabel.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.KEY_CODE_ENTER) {
@@ -67,6 +63,23 @@
     }
   });
 
+  var renderItems = function (obj) {
+    var length = obj.length;
+    var getRandomElemFromArr = obj[window.utils.getRandomNum(length)];
+    appendPhotos(obj);
+    renderBigPhoto(getRandomElemFromArr);
+  };
+
+  var logError = function (errLog) {
+    var errorBlock = document.querySelector('#error').content.querySelector('.error');
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(errorBlock);
+    fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
+    document.querySelector('body').appendChild(fragment);
+  };
+
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
+
+  window.load('https://js.dump.academy/kekstagram/data 111111111', renderItems, logError);
 })();
