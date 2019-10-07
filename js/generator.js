@@ -1,16 +1,15 @@
 'use strict';
 
 (function () {
-  /*var makeEntity = function (imgName) {
+  var makeEntity = function (imgName) {
     var tempObj = {
       url: 'photos/' + imgName + '.jpg',
       description: setTextProp(window.data.descriptionMock),
       likes: setLikes(window.data.render.LIKES_SPREAD_MAX, window.data.render.LIKES_SPREAD_MIN),
       comments: setCommentsArray(),
     };
-    console.log(window.data.entity);
     return tempObj;
-  };*/
+  };
 
   var pushEntityToArray = function (entityArr) {
     for (var j = 1; j <= window.data.render.ENTITY_LIMIT; j++) {
@@ -40,14 +39,5 @@
     return window.utils.getRandomNum(max, min);
   };
 
-  var returnObj = function (obj) {
-    window.data.entity = obj;
-  };
-
-  var logError = function (errLog) {
-    console.log(errLog);
-  };
-
   pushEntityToArray(window.data.entity);
-  //window.load('https://js.dump.academy/kekstagram/data', returnObj, logError);
 })();
