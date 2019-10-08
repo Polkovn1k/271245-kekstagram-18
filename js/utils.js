@@ -27,10 +27,14 @@
       window.data.uploadInput.value = '';
     },
 
-    closeOtherOverlays: function (closeElem, eventElem) {
-      return function () {
-        var element = document.querySelector('' + closeElem);
-        element.classList.add('hidden');
+    closeOtherOverlays: function (removedElem) {
+      return function (evt) {
+        if (evt.type === 'click' && evt.currentTarget === evt.target) {
+          removedElem.remove();
+        }
+        if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
+          removedElem.remove();
+        }
       };
     },
 

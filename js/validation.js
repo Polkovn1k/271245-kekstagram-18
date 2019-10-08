@@ -100,15 +100,13 @@
   var form = document.querySelector('.img-upload__form');
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
-      var successOverlay = document.querySelector('.success');
       window.utils.closeImgUploadOverlay();
-      if (!successOverlay) {
-        window.logSuccess();
-        successOverlay = document.querySelector('.success');
-      } else {
-        successOverlay.classList.remove('hidden');
-      }
-      
+      window.logSuccess();
+      var successOverlay = document.querySelector('.success');
+      var successOverlayBtn = successOverlay.querySelector('.success__button');
+      successOverlayBtn.addEventListener('click', window.utils.closeOtherOverlays(successOverlay));
+      successOverlay.addEventListener('click', window.utils.closeOtherOverlays(successOverlay));
+      document.addEventListener('keydown', window.utils.closeOtherOverlays(successOverlay));
       //document.querySelector('.success__button').addEventListener('click', documentClickHandler);
     });
     evt.preventDefault();
