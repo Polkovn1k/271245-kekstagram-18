@@ -27,6 +27,13 @@
       window.data.uploadInput.value = '';
     },
 
+    closeOtherOverlays: function (closeElem, eventElem) {
+      return function () {
+        var element = document.querySelector('' + closeElem);
+        element.classList.add('hidden');
+      };
+    },
+
     closeImgUploadOverlay: function () {
       window.pinPositionDefaultSettings();
       window.data.uploadedImg.className = '';

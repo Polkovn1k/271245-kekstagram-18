@@ -93,15 +93,23 @@
   });
   
   
-  
+  //var documentClickHandler = window.utils.closeOtherOverlays('.success');
+
   
   
   var form = document.querySelector('.img-upload__form');
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
-      console.log(11111111);
+      var successOverlay = document.querySelector('.success');
       window.utils.closeImgUploadOverlay();
-      window.logSuccess();
+      if (!successOverlay) {
+        window.logSuccess();
+        successOverlay = document.querySelector('.success');
+      } else {
+        successOverlay.classList.remove('hidden');
+      }
+      
+      //document.querySelector('.success__button').addEventListener('click', documentClickHandler);
     });
     evt.preventDefault();
   });
