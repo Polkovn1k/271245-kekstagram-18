@@ -18,23 +18,25 @@
     window.utils.openImgUploadOverlay();
   };
 
-  var updateScaleValue = function (operationType) {
+  window.updateScaleValue = function (operationType) {
     var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
     if (operationType === 'smaller') {
       scaleValue = (scaleValue < 25) ? 0 : scaleValue - 25;
-    } else {
+    } else if (operationType === 'bigger') {
       scaleValue = (scaleValue > 75) ? 100 : scaleValue + 25;
+    } else {
+      scaleValue = EFFECT_DEFAULT_VAL;
     }
     imgScale(scaleValue);
     nodes.scaleInput.value = scaleValue + '%';
   };
 
   var smallerBtnClickHandler = function () {
-    updateScaleValue('smaller');
+    window.updateScaleValue('smaller');
   };
 
   var biggerBtnClickHandler = function () {
-    updateScaleValue('bigger');
+    window.updateScaleValue('bigger');
   };
 
   var imgScale = function (value) {
@@ -58,7 +60,11 @@
     return false;
   };
 
-  var setEffectForImg = function (number) {
+  window.setEffectForImg = function (number) {
+    if (number === 'default' || number === undefined) {
+      nodes.uploadedImg.style.filter = 'none';
+      return false;
+    }
     var filterType = getCheckedInput();
     switch (filterType) {
       case 'none':
@@ -86,7 +92,7 @@
   var setValues = function (numtype) {
     var handlePosition = numtype;
     setEffectLevel(handlePosition);
-    setEffectForImg(handlePosition);
+    window.setEffectForImg(handlePosition);
   };
 
   var setImgEffect = function () {

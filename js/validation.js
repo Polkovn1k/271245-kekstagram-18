@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var hashInput = window.data.imgUploadOverlay.querySelector('.text__hashtags');
-  var hashTextArea = window.data.imgUploadOverlay.querySelector('.text__description');
   var MAX_HASH_TAGS = 5;
   var MIN_HASH_LENGTH = 2;
   var MAX_HASH_LENGTH = 20;
@@ -10,7 +8,7 @@
   var INPUT_ERROR_STYLE = 'inset 0px 0px 1px 1px red';
 
   var getWordsArr = function () {
-    return hashInput.value.toLowerCase().trim().split(' ');
+    return window.data.hashTagsInput.value.toLowerCase().trim().split(' ');
   };
 
   var wordsDublicate = function () {
@@ -46,7 +44,7 @@
   };
 
   var getInvalidComment = function () {
-    if (hashTextArea.value.length > MAX_COMMENT_LENGTH) {
+    if (window.data.commentsTextArea.value.length > MAX_COMMENT_LENGTH) {
       return 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
     }
     return '';
@@ -54,7 +52,7 @@
 
   var checkValidity = function () {
     var invalidTagsMessage = getInvalidTags(getWordsArr());
-    hashInput.setCustomValidity(invalidTagsMessage);
+    window.data.hashTagsInput.setCustomValidity(invalidTagsMessage);
   };
 
   var errorStyle = function (nodeElement) {
@@ -66,33 +64,32 @@
     return false;
   }
 
-  hashInput.addEventListener('blur', function () {
+  window.data.hashTagsInput.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
 
-  hashInput.addEventListener('focus', function () {
+  window.data.hashTagsInput.addEventListener('focus', function () {
     document.removeEventListener('keydown', window.utils.documentKeydownHandler);
   });
 
-  hashTextArea.addEventListener('focus', function () {
+  window.data.commentsTextArea.addEventListener('focus', function () {
     document.removeEventListener('keydown', window.utils.documentKeydownHandler);
   });
 
-  hashTextArea.addEventListener('blur', function () {
+  window.data.commentsTextArea.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
   });
 
-  hashInput.addEventListener('input', function (evt) {
+  window.data.hashTagsInput.addEventListener('input', function (evt) {
     getWordsArr();
     checkValidity();
     errorStyle(evt.target);
   });
 
-  hashTextArea.addEventListener('input', function (evt) {
+  window.data.commentsTextArea.addEventListener('input', function (evt) {
     var invalidCommentMessage = getInvalidComment();
-    hashTextArea.setCustomValidity(invalidCommentMessage);
+    window.data.commentsTextArea.setCustomValidity(invalidCommentMessage);
     errorStyle(evt.target);
-    //console.dir();
   });
   
   
@@ -103,6 +100,8 @@
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
       console.log(11111111);
+      window.utils.closeImgUploadOverlay();
+      window.logSuccess();
     });
     evt.preventDefault();
   });

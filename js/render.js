@@ -75,7 +75,14 @@
     var fragment = document.createDocumentFragment();
     fragment.appendChild(errorBlock);
     fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
-    document.querySelector('body').appendChild(fragment);
+    document.querySelector('main').appendChild(fragment);
+  };
+
+  window.logSuccess = function () {
+    var successBlock = document.querySelector('#success').content.querySelector('.success');
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(successBlock);
+    document.querySelector('main').appendChild(fragment);
   };
 
   document.querySelector('.social__comment-count').classList.add('visually-hidden');

@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.utils = {
     getRandomNum: function (max, min) {
       if (min === undefined) {
@@ -20,10 +21,21 @@
       document.addEventListener('keydown', window.utils.documentKeydownHandler);
     },
 
-    closeImgUploadOverlay: function () {
-      window.data.imgUploadOverlay.classList.add('hidden');
+    inputReset: function () {
+      window.data.hashTagsInput.value = '';
+      window.data.commentsTextArea.value = '';
       window.data.uploadInput.value = '';
+    },
+
+    closeImgUploadOverlay: function () {
+      window.pinPositionDefaultSettings();
+      window.data.uploadedImg.className = '';
+      window.utils.inputReset();
+      window.updateScaleValue('default');
+      window.setEffectForImg('default');
       document.removeEventListener('keydown', window.utils.documentKeydownHandler);
+      window.data.imgUploadOverlay.classList.add('hidden');
     },
   };
+
 })();
