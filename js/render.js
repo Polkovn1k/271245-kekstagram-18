@@ -83,7 +83,7 @@
       errorOverlayBtn[i].addEventListener('click', window.utils.btnClickHandler(errorOverlay));
     }
     errorOverlay.addEventListener('click', window.utils.btnClickHandler(errorOverlay));
-    document.addEventListener('keydown', window.utils.documentKeydownHandler(errorOverlay));
+    document.addEventListener('keydown', window.utils.escKeydownHandler(errorOverlay));
   };
 
   window.logSuccess = function () {

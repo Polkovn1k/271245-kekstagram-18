@@ -27,7 +27,7 @@
       window.data.uploadInput.value = '';
     },
 
-    documentKeydownHandler: function (removedElem) {
+    escKeydownHandler: function (removedElem) {
       return function keyHandler(evt) {
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
           removedElem.remove();

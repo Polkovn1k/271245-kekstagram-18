@@ -34,7 +34,7 @@
 
   var setNodeErrorStyle = function (node, isError) {
     node.style.boxShadow = isError ? INPUT_ERROR_STYLE : INPUT_VALID_STYLE;
-  }
+  };
 
   var getInvalidTags = function (words) {
     for (var i = 0; i < words.length; i++) {
@@ -112,7 +112,7 @@
       var successOverlayBtn = successOverlay.querySelector('.success__button');
       successOverlayBtn.addEventListener('click', window.utils.btnClickHandler(successOverlay));
       successOverlay.addEventListener('click', window.utils.btnClickHandler(successOverlay));
-      document.addEventListener('keydown', window.utils.documentKeydownHandler(successOverlay));
+      document.addEventListener('keydown', window.utils.escKeydownHandler(successOverlay));
     });
     evt.preventDefault();
   });
