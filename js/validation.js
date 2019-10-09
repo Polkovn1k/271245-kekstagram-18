@@ -36,19 +36,19 @@
     node.style.boxShadow = isError ? INPUT_ERROR_STYLE : INPUT_VALID_STYLE;
   }
 
-  var getInvalidTags = function (arr) {
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].charAt(0) !== '#') {
+  var getInvalidTags = function (words) {
+    for (var i = 0; i < words.length; i++) {
+      if (words[i].charAt(0) !== '#') {
         return tagsErrorMessages.FIRST_CHAR;
       }
-      if (arr[i].length < MIN_HASH_LENGTH) {
+      if (words[i].length < MIN_HASH_LENGTH) {
         return tagsErrorMessages.MIN_HASH_LENGTH;
       }
-      if (arr[i].length > MAX_HASH_LENGTH) {
+      if (words[i].length > MAX_HASH_LENGTH) {
         return tagsErrorMessages.MAX_HASH_LENGTH;
       }
     }
-    if (arr.length > MAX_HASH_TAGS) {
+    if (words.length > MAX_HASH_TAGS) {
       return tagsErrorMessages.MAX_HASH_COUNT;
     }
     if (wordsDublicate()) {
@@ -105,14 +105,14 @@
 
   var form = document.querySelector('.img-upload__form');
   form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function (response) {
+    window.upload(new FormData(form), function () {
       window.utils.closeImgUploadOverlay();
       window.logSuccess();
       var successOverlay = document.querySelector('.success');
       var successOverlayBtn = successOverlay.querySelector('.success__button');
-      successOverlayBtn.addEventListener('click', window.utils.closeOverlayAfterClick(successOverlay));
-      successOverlay.addEventListener('click', window.utils.closeOverlayAfterClick(successOverlay));
-      document.addEventListener('keydown', window.utils.closeOverlayAfterKeydown(successOverlay));
+      successOverlayBtn.addEventListener('click', window.utils.btnClickHandler(successOverlay));
+      successOverlay.addEventListener('click', window.utils.btnClickHandler(successOverlay));
+      document.addEventListener('keydown', window.utils.documentKeydownHandler(successOverlay));
     });
     evt.preventDefault();
   });

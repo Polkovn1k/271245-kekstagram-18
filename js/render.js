@@ -77,6 +77,13 @@
     fragment.appendChild(errorBlockClone);
     fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
     document.querySelector('main').appendChild(fragment);
+    var errorOverlay = document.querySelector('.error');
+    var errorOverlayBtn = errorOverlay.querySelectorAll('.error__button');
+    for (var i = 0; i < errorOverlayBtn.length; i++) {
+      errorOverlayBtn[i].addEventListener('click', window.utils.btnClickHandler(errorOverlay));
+    }
+    errorOverlay.addEventListener('click', window.utils.btnClickHandler(errorOverlay));
+    document.addEventListener('keydown', window.utils.documentKeydownHandler(errorOverlay));
   };
 
   window.logSuccess = function () {
