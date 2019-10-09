@@ -108,12 +108,7 @@
   window.data.commentsTextArea.addEventListener('input', function (evt) {
     checkTextareaValidity(evt.target);
   });
-  
-  
-  //var documentClickHandler = window.utils.closeOtherOverlays('.success');
 
-  
-  
   var form = document.querySelector('.img-upload__form');
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
@@ -121,10 +116,9 @@
       window.logSuccess();
       var successOverlay = document.querySelector('.success');
       var successOverlayBtn = successOverlay.querySelector('.success__button');
-      successOverlayBtn.addEventListener('click', window.utils.closeOtherOverlays(successOverlay));
-      successOverlay.addEventListener('click', window.utils.closeOtherOverlays(successOverlay));
-      document.addEventListener('keydown', window.utils.closeOtherOverlays(successOverlay));
-      //document.querySelector('.success__button').addEventListener('click', documentClickHandler);
+      successOverlayBtn.addEventListener('click', window.utils.closeOverlayAfterClick(successOverlay));
+      successOverlay.addEventListener('click', window.utils.closeOverlayAfterClick(successOverlay));
+      document.addEventListener('keydown', window.utils.closeOverlayAfterKeydown(successOverlay));
     });
     evt.preventDefault();
   });

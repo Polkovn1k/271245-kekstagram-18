@@ -72,16 +72,18 @@
 
   var logError = function (errLog) {
     var errorBlock = document.querySelector('#error').content.querySelector('.error');
+    var errorBlockClone = errorBlock.cloneNode(true);
     var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorBlock);
+    fragment.appendChild(errorBlockClone);
     fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
     document.querySelector('main').appendChild(fragment);
   };
 
   window.logSuccess = function () {
     var successBlock = document.querySelector('#success').content.querySelector('.success');
+    var successBlockClone = successBlock.cloneNode(true);
     var fragment = document.createDocumentFragment();
-    fragment.appendChild(successBlock);
+    fragment.appendChild(successBlockClone);
     document.querySelector('main').appendChild(fragment);
   };
 

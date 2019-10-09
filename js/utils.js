@@ -27,14 +27,21 @@
       window.data.uploadInput.value = '';
     },
 
-    closeOtherOverlays: function (removedElem) {
-      return function (evt) {
-        if (evt.type === 'click' && evt.currentTarget === evt.target) {
-          removedElem.remove();
-        }
+    closeOverlayAfterKeydown: function (removedElem) {
+      return function keyDownHandler (evt) {
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
           removedElem.remove();
         }
+        document.removeEventListener('keydown', keyDownHandler);
+      };
+    },
+
+    closeOverlayAfterClick: function (removedElem) {
+      return function btnClickHandler(evt) {
+        if (evt.type === 'click' && evt.currentTarget === evt.target) {
+          removedElem.remove();
+        }
+        document.removeEventListener('click', btnClickHandler);
       };
     },
 
