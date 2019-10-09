@@ -6,6 +6,16 @@
   var MAX_HASH_LENGTH = 20;
   var MAX_COMMENT_LENGTH = 140;
   var INPUT_ERROR_STYLE = 'inset 0px 0px 1px 1px red';
+  var INPUT_VALID_STYLE = 'none';
+  var VALID_FIELD_MESSAGE = '';
+  var tagsErrorMessages = {
+    FIRST_CHAR: 'Хэш-теги должны начинаться с символа #',
+    MIN_HASH_LENGTH: 'Длина хэш-тега не может быть меньше ' + MIN_HASH_LENGTH,
+    MAX_HASH_LENGTH: 'Длина хэш-тега не может быть больше ' + MAX_HASH_LENGTH,
+    MAX_HASH_COUNT: 'Не более ' + MAX_HASH_TAGS + ' хэш-тегов',
+    EQUAL_HASH: 'У вас есть одинаковые хэш-теги!',
+  };
+  var COMMENTS_ERROR_MESSAGES = 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
 
   var getWordsArr = function () {
     return window.data.hashTagsInput.value.toLowerCase().trim().split(' ');
@@ -22,47 +32,58 @@
     return false;
   };
 
+  var setNodeErrorStyle = function (node, isError) {
+    node.style.boxShadow = isError ? INPUT_ERROR_STYLE : INPUT_VALID_STYLE;
+  }
+
   var getInvalidTags = function (arr) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i].charAt(0) !== '#') {
-        return 'Хэш-теги должны начинаться с символа #';
+        return tagsErrorMessages.FIRST_CHAR;
       }
       if (arr[i].length < MIN_HASH_LENGTH) {
-        return 'Длина хэш-тега не может быть меньше ' + MIN_HASH_LENGTH;
+        return tagsErrorMessages.MIN_HASH_LENGTH;
       }
       if (arr[i].length > MAX_HASH_LENGTH) {
-        return 'Длина хэш-тега не может быть больше ' + MAX_HASH_LENGTH;
+        return tagsErrorMessages.MAX_HASH_LENGTH;
       }
     }
     if (arr.length > MAX_HASH_TAGS) {
-      return 'Не более ' + MAX_HASH_TAGS + ' хэш-тегов';
+      return tagsErrorMessages.MAX_HASH_COUNT;
     }
     if (wordsDublicate()) {
-      return 'У вас есть одинаковые хэш-теги!';
+      return tagsErrorMessages.EQUAL_HASH;
     }
-    return '';
+    return VALID_FIELD_MESSAGE;
   };
 
   var getInvalidComment = function () {
     if (window.data.commentsTextArea.value.length > MAX_COMMENT_LENGTH) {
-      return 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
+      return COMMENTS_ERROR_MESSAGES;
     }
-    return '';
+    return VALID_FIELD_MESSAGE;
   };
 
-  var checkValidity = function () {
-    var invalidTagsMessage = getInvalidTags(getWordsArr());
+  var checkInputValidity = function (input) {
+    var words = getWordsArr();
+    var invalidTagsMessage = getInvalidTags(words);
+    if (invalidTagsMessage !== VALID_FIELD_MESSAGE) {
+      setNodeErrorStyle(input, true);
+    } else {
+      setNodeErrorStyle(input, false);
+    }
     window.data.hashTagsInput.setCustomValidity(invalidTagsMessage);
   };
 
-  var errorStyle = function (nodeElement) {
-    if (!nodeElement.validity.valid) {
-      nodeElement.style.boxShadow = INPUT_ERROR_STYLE;
-      return false;
+  var checkTextareaValidity = function (textarea) {
+    var invalidTextareaMessage = getInvalidComment();
+    if (invalidTextareaMessage !== VALID_FIELD_MESSAGE) {
+      setNodeErrorStyle(textarea, true);
+    } else {
+      setNodeErrorStyle(textarea, false);
     }
-    nodeElement.style.boxShadow = 'none';
-    return false;
-  }
+    window.data.commentsTextArea.setCustomValidity(invalidTextareaMessage);
+  };
 
   window.data.hashTagsInput.addEventListener('blur', function () {
     document.addEventListener('keydown', window.utils.documentKeydownHandler);
@@ -81,15 +102,11 @@
   });
 
   window.data.hashTagsInput.addEventListener('input', function (evt) {
-    getWordsArr();
-    checkValidity();
-    errorStyle(evt.target);
+    checkInputValidity(evt.target);
   });
 
   window.data.commentsTextArea.addEventListener('input', function (evt) {
-    var invalidCommentMessage = getInvalidComment();
-    window.data.commentsTextArea.setCustomValidity(invalidCommentMessage);
-    errorStyle(evt.target);
+    checkTextareaValidity(evt.target);
   });
   
   
