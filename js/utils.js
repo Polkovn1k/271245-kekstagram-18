@@ -28,7 +28,7 @@
     },
 
     closeOverlayAfterKeydown: function (removedElem) {
-      return function keyDownHandler (evt) {
+      return function keyDownHandler(evt) {
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
           removedElem.remove();
         }

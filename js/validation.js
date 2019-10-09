@@ -67,21 +67,15 @@
   var checkInputValidity = function (input) {
     var words = getWordsArr();
     var invalidTagsMessage = getInvalidTags(words);
-    if (invalidTagsMessage !== VALID_FIELD_MESSAGE) {
-      setNodeErrorStyle(input, true);
-    } else {
-      setNodeErrorStyle(input, false);
-    }
+    var isValid = invalidTagsMessage !== VALID_FIELD_MESSAGE;
+    setNodeErrorStyle(input, isValid);
     window.data.hashTagsInput.setCustomValidity(invalidTagsMessage);
   };
 
   var checkTextareaValidity = function (textarea) {
     var invalidTextareaMessage = getInvalidComment();
-    if (invalidTextareaMessage !== VALID_FIELD_MESSAGE) {
-      setNodeErrorStyle(textarea, true);
-    } else {
-      setNodeErrorStyle(textarea, false);
-    }
+    var isValid = invalidTextareaMessage !== VALID_FIELD_MESSAGE;
+    setNodeErrorStyle(textarea, isValid);
     window.data.commentsTextArea.setCustomValidity(invalidTextareaMessage);
   };
 
