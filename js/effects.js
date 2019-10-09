@@ -61,11 +61,8 @@
   };
 
   window.setEffectForImg = function (number) {
-    if (number === 'default' || number === undefined) {
-      nodes.uploadedImg.style.filter = 'none';
-      return false;
-    }
-    var filterType = getCheckedInput();
+    var reset = number === undefined || number === 'default';
+    var filterType = reset ? 'default' : getCheckedInput();
     switch (filterType) {
       case 'none':
         nodes.uploadedImg.style.filter = 'none';
@@ -85,6 +82,9 @@
         break;
       case 'heat':
         nodes.uploadedImg.style.filter = 'brightness(' + number * (3 / 100) + ')';
+        break;
+      case 'default':
+        nodes.uploadedImg.style.filter = 'none';
         break;
     }
   };
