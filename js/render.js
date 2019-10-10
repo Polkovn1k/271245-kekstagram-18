@@ -79,11 +79,17 @@
     document.querySelector('main').appendChild(errorBlockClone);
     var errorOverlay = document.querySelector('.error');
     var errorOverlayBtn = errorOverlay.querySelectorAll('.error__button');
+    var errorOverlayBtnHandler = window.utils.btnClickHandler(function () {
+      errorOverlay.remove();
+    });
+    var errorOverlayKeyHandler = window.utils.escKeydownHandler(function () {
+      errorOverlay.remove();
+    });
     for (var i = 0; i < errorOverlayBtn.length; i++) {
-      errorOverlayBtn[i].addEventListener('click', window.utils.btnClickHandler(errorOverlay));
+      errorOverlayBtn[i].addEventListener('click', errorOverlayBtnHandler);
     }
-    errorOverlay.addEventListener('click', window.utils.btnClickHandler(errorOverlay));
-    document.addEventListener('keydown', window.utils.escKeydownHandler(errorOverlay));
+    errorOverlay.addEventListener('click', errorOverlayBtnHandler);
+    document.addEventListener('keydown', errorOverlayKeyHandler);
   };
 
   window.logSuccess = function () {

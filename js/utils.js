@@ -27,19 +27,19 @@
       window.data.uploadInput.value = '';
     },
 
-    escKeydownHandler: function (removedElem) {
+    escKeydownHandler: function (callback) {
       return function keyHandler(evt) {
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
-          removedElem.remove();
+          callback();
         }
         document.removeEventListener('keydown', keyHandler);
       };
     },
 
-    btnClickHandler: function (removedElem) {
+    btnClickHandler: function (callback) {
       return function clickHandler(evt) {
         if (evt.type === 'click' && evt.currentTarget === evt.target) {
-          removedElem.remove();
+          callback();
         }
         document.removeEventListener('click', clickHandler);
       };
