@@ -7,6 +7,8 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
+  var successBlockTemplate = document.querySelector('#success').content;
+  var errorBlockTemplate = document.querySelector('#error').content;
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -71,12 +73,10 @@
   };
 
   var logError = function (errLog) {
-    var errorBlock = document.querySelector('#error').content.querySelector('.error');
+    var errorBlock = errorBlockTemplate.querySelector('.error');
     var errorBlockClone = errorBlock.cloneNode(true);
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorBlockClone);
-    fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
-    document.querySelector('main').appendChild(fragment);
+    errorBlockClone.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
+    document.querySelector('main').appendChild(errorBlockClone);
     var errorOverlay = document.querySelector('.error');
     var errorOverlayBtn = errorOverlay.querySelectorAll('.error__button');
     for (var i = 0; i < errorOverlayBtn.length; i++) {
@@ -87,11 +87,9 @@
   };
 
   window.logSuccess = function () {
-    var successBlock = document.querySelector('#success').content.querySelector('.success');
+    var successBlock = successBlockTemplate.querySelector('.success');
     var successBlockClone = successBlock.cloneNode(true);
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(successBlockClone);
-    document.querySelector('main').appendChild(fragment);
+    document.querySelector('main').appendChild(successBlockClone);
   };
 
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
