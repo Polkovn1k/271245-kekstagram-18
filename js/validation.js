@@ -107,18 +107,7 @@
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function () {
       window.utils.closeImgUploadOverlay();
-      window.logSuccess();
-      var successOverlay = document.querySelector('.success');
-      var successOverlayBtn = successOverlay.querySelector('.success__button');
-      var successOverlayBtnHandler = window.utils.btnClickHandler(function () {
-        successOverlay.remove();
-      });
-      var successOverlayKeyHandler = window.utils.escKeydownHandler(function () {
-        successOverlay.remove();
-      });
-      successOverlayBtn.addEventListener('click', successOverlayBtnHandler);
-      successOverlay.addEventListener('click', successOverlayBtnHandler);
-      document.addEventListener('keydown', successOverlayKeyHandler);
+      window.showSuccess();
     });
     evt.preventDefault();
   });

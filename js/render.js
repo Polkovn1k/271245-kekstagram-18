@@ -7,8 +7,6 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
-  var successBlockTemplate = document.querySelector('#success').content;
-  var errorBlockTemplate = document.querySelector('#error').content;
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -72,34 +70,8 @@
     renderBigPhoto(getRandomElemFromArr);
   };
 
-  var logError = function (errLog) {
-    var errorBlock = errorBlockTemplate.querySelector('.error');
-    var errorBlockClone = errorBlock.cloneNode(true);
-    errorBlockClone.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
-    document.querySelector('main').appendChild(errorBlockClone);
-    var errorOverlay = document.querySelector('.error');
-    var errorOverlayBtn = errorOverlay.querySelectorAll('.error__button');
-    var errorOverlayBtnHandler = window.utils.btnClickHandler(function () {
-      errorOverlay.remove();
-    });
-    var errorOverlayKeyHandler = window.utils.escKeydownHandler(function () {
-      errorOverlay.remove();
-    });
-    for (var i = 0; i < errorOverlayBtn.length; i++) {
-      errorOverlayBtn[i].addEventListener('click', errorOverlayBtnHandler);
-    }
-    errorOverlay.addEventListener('click', errorOverlayBtnHandler);
-    document.addEventListener('keydown', errorOverlayKeyHandler);
-  };
-
-  window.logSuccess = function () {
-    var successBlock = successBlockTemplate.querySelector('.success');
-    var successBlockClone = successBlock.cloneNode(true);
-    document.querySelector('main').appendChild(successBlockClone);
-  };
-
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-  window.load('https://js.dump.academy/kekstagram/data', renderItems, logError);
+  window.load('https://js.dump.academy/kekstagram/data', renderItems, window.logError);
 })();
