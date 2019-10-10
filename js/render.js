@@ -70,16 +70,8 @@
     renderBigPhoto(getRandomElemFromArr);
   };
 
-  var logError = function (errLog) {
-    var errorBlock = document.querySelector('#error').content.querySelector('.error');
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorBlock);
-    fragment.querySelector('.error__title').textContent += ': ' + errLog + ' статус';
-    document.querySelector('body').appendChild(fragment);
-  };
-
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-  window.load('https://js.dump.academy/kekstagram/data 111111111', renderItems, logError);
+  window.load('https://js.dump.academy/kekstagram/data', renderItems, window.logError);
 })();

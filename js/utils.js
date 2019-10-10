@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.utils = {
     getRandomNum: function (max, min) {
       if (min === undefined) {
@@ -20,10 +21,39 @@
       document.addEventListener('keydown', window.utils.documentKeydownHandler);
     },
 
-    closeImgUploadOverlay: function () {
-      window.data.imgUploadOverlay.classList.add('hidden');
+    inputReset: function () {
+      window.data.hashTagsInput.value = '';
+      window.data.commentsTextArea.value = '';
       window.data.uploadInput.value = '';
+    },
+
+    escKeydownHandler: function (callback) {
+      return function keyHandler(evt) {
+        if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
+          callback();
+        }
+        document.removeEventListener('keydown', keyHandler);
+      };
+    },
+
+    btnClickHandler: function (callback) {
+      return function clickHandler(evt) {
+        if (evt.type === 'click' && evt.currentTarget === evt.target) {
+          callback();
+        }
+        document.removeEventListener('click', clickHandler);
+      };
+    },
+
+    closeImgUploadOverlay: function () {
+      window.pinPositionDefaultSettings();
+      window.data.uploadedImg.className = '';
+      window.utils.inputReset();
+      window.updateScaleValue('default');
+      window.setEffectForImg('default');
       document.removeEventListener('keydown', window.utils.documentKeydownHandler);
+      window.data.imgUploadOverlay.classList.add('hidden');
     },
   };
+
 })();
