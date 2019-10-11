@@ -7,6 +7,7 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
+  var imgNode;
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -16,18 +17,18 @@
     return photoElement;
   };
 
-  var addListener = function (element, elementProps, index) {
-    element.addEventListener('click', function () {
-      console.dir(elementProps[index].url);
+  var addListener = function (objProps, index) {
+    imgNode.addEventListener('click', function () {
+      console.dir(objProps[index].url);
     });
   };
 
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      var element = renderPhoto(arr[i]);
-      fragment.appendChild(element);
-      addListener(element, arr, i);
+      imgNode = renderPhoto(arr[i]);
+      fragment.appendChild(imgNode);
+      addListener(arr, i);
     }
     picturesContainer.appendChild(fragment);
   };
@@ -57,7 +58,6 @@
     photoBlock.querySelector('.comments-count').textContent = photo.comments.length;
     appendComments(photo.comments);
   };
-
 
   uploadInputLabel.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.KEY_CODE_ENTER) {
