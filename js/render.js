@@ -17,9 +17,9 @@
     return photoElement;
   };
 
-  var addListener = function (objProps, index) {
+  var addListener = function (objProps) {
     imgNode.addEventListener('click', function () {
-      console.dir(objProps[index].url);
+      console.dir(objProps.url);
     });
   };
 
@@ -28,7 +28,7 @@
     for (var i = 0; i < arr.length; i++) {
       imgNode = renderPhoto(arr[i]);
       fragment.appendChild(imgNode);
-      addListener(arr, i);
+      addListener(arr[i]);
     }
     picturesContainer.appendChild(fragment);
   };
