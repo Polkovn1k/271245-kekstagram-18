@@ -16,12 +16,18 @@
     return photoElement;
   };
 
+  var addListener = function (element, elementProps, index) {
+    element.addEventListener('click', function () {
+      console.dir(elementProps[index].url);
+    });
+  };
+
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      console.dir(renderPhoto(arr[i]));//Сам элемент
-      console.dir(arr[i]);//Его данные
-      fragment.appendChild(renderPhoto(arr[i]));
+      var element = renderPhoto(arr[i]);
+      fragment.appendChild(element);
+      addListener(element, arr, i);
     }
     picturesContainer.appendChild(fragment);
   };
