@@ -7,7 +7,6 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialComments = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
-  var imgNode;
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -17,8 +16,8 @@
     return photoElement;
   };
 
-  var addListener = function (objProps) {
-    imgNode.addEventListener('click', function () {
+  var addListener = function (element, objProps) {
+    element.addEventListener('click', function () {
       console.dir(objProps.url);
     });
   };
@@ -26,9 +25,10 @@
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      imgNode = renderPhoto(arr[i]);
+      var props = arr[i];
+      var imgNode = renderPhoto(props);
       fragment.appendChild(imgNode);
-      addListener(arr[i]);
+      addListener(imgNode, props);
     }
     picturesContainer.appendChild(fragment);
   };
