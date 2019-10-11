@@ -19,6 +19,8 @@
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
+      console.dir(renderPhoto(arr[i]));//Сам элемент
+      console.dir(arr[i]);//Его данные
       fragment.appendChild(renderPhoto(arr[i]));
     }
     picturesContainer.appendChild(fragment);
