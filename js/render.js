@@ -5,8 +5,16 @@
   var picturesContainer = document.querySelector('.pictures');
   var photoBlock = document.querySelector('.big-picture');
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
-  var socialComments = document.querySelector('.social__comments');
+  var socialCommentsList = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
+
+  var clearPreviousComments = function () {
+    var socialCommentsItems = socialCommentsList.querySelectorAll('.social__comment');
+    for (var i = 0; i < socialCommentsItems.length; i++) {
+      socialCommentsItems[i].remove();
+      console.log(12);
+    }
+  };
 
   var renderPhoto = function (photoArr) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
@@ -16,9 +24,23 @@
     return photoElement;
   };
 
+  var renderBigPhoto = function (photo) {
+    photoBlock.querySelector('.big-picture__img img').src = photo.url;
+    //photoBlock.querySelector('.big-picture__img').src = photo.url;
+    photoBlock.querySelector('.likes-count').textContent = photo.likes;
+    photoBlock.querySelector('.social__caption').textContent = photo.description;
+    photoBlock.querySelector('.comments-count').textContent = photo.comments.length;
+    clearPreviousComments();
+    appendComments(photo.comments);
+  };
+
   var addListener = function (element, objProps) {
-    element.addEventListener('click', function () {
-      console.dir(objProps.url);
+    element.addEventListener('click', function (evt) {
+      //console.dir(objProps.url);
+      evt.preventDefault();
+      renderBigPhoto(objProps);
+      console.log(objProps);
+      photoBlock.classList.remove('hidden');
     });
   };
 
@@ -47,16 +69,7 @@
     for (var i = 0; i < nodeElements.length; i++) {
       fragment.appendChild(renderComments(nodeElements[i]));
     }
-    socialComments.appendChild(fragment);
-  };
-
-  var renderBigPhoto = function (photo) {
-    photoBlock.querySelector('.big-picture__img').src = photo.url;
-    photoBlock.querySelector('.big-picture__img').src = photo.url;
-    photoBlock.querySelector('.likes-count').textContent = photo.likes;
-    photoBlock.querySelector('.social__caption').textContent = photo.description;
-    photoBlock.querySelector('.comments-count').textContent = photo.comments.length;
-    appendComments(photo.comments);
+    socialCommentsList.appendChild(fragment);
   };
 
   uploadInputLabel.addEventListener('keydown', function (evt) {
