@@ -14,10 +14,10 @@
   var modalEvents = function (overlay, btns) {
     var btnHandler = window.utils.btnClickHandler(function () {
       overlay.remove();
-    });
+    }, 'remove');
     var keydownHandler = window.utils.escKeydownHandler(function () {
       overlay.remove();
-    });
+    }, 'remove');
     for (var i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', btnHandler);
     }
