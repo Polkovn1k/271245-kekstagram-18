@@ -27,21 +27,25 @@
       window.data.uploadInput.value = '';
     },
 
-    escKeydownHandler: function (callback) {
+    escKeydownHandler: function (callback, remove) {
       return function keyHandler(evt) {
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
           callback();
         }
-        document.removeEventListener('keydown', keyHandler);
+        if (remove === 'remove') {
+          document.removeEventListener('keydown', keyHandler);
+        }
       };
     },
 
-    btnClickHandler: function (callback) {
+    btnClickHandler: function (callback, remove) {
       return function clickHandler(evt) {
         if (evt.type === 'click' && evt.currentTarget === evt.target) {
           callback();
         }
-        document.removeEventListener('click', clickHandler);
+        if (remove === 'remove') {
+          document.removeEventListener('click', clickHandler);
+        }
       };
     },
 
