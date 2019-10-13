@@ -32,7 +32,7 @@
         if (evt.type === 'keydown' && evt.keyCode === window.data.KEY_CODE_ESC) {
           callback();
         }
-        if (remove === 'remove') {
+        if (remove) {
           document.removeEventListener('keydown', keyHandler);
         }
       };
@@ -43,7 +43,7 @@
         if (evt.type === 'click' && evt.currentTarget === evt.target) {
           callback();
         }
-        if (remove === 'remove') {
+        if (remove) {
           document.removeEventListener('click', clickHandler);
         }
       };

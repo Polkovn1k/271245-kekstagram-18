@@ -76,14 +76,13 @@
     //renderBigPhotoAndDescription(getRandomElemFromArr);
   };
 
+  var showOverlay = function () {
+    photoBlock.classList.add('hidden');
+  };
+
   var hideBigPhotoOverlay = function (overlay, btns) {
-    var btnHandler = window.utils.btnClickHandler(function () {
-      console.log(1213);
-      overlay.classList.add('hidden');
-    });
-    var keydownHandler = window.utils.escKeydownHandler(function () {
-      overlay.classList.add('hidden');
-    });
+    var btnHandler = window.utils.btnClickHandler(showOverlay);
+    var keydownHandler = window.utils.escKeydownHandler(showOverlay);
     for (var i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', btnHandler);
     }
