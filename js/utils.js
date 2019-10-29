@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-
+  
   window.utils = {
     getRandomNum: function (max, min) {
       if (min === undefined) {

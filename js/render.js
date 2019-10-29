@@ -8,6 +8,12 @@
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialCommentsList = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
+  var topFilter = document.querySelector('.img-filters');
+  var topFilterBtns = {
+    popular: topFilter.querySelector('#filter-popular'),
+    random: topFilter.querySelector('#filter-random'),
+    discussed: topFilter.querySelector('#filter-discussed'),
+  };
 
   var clearPreviousComments = function () {
     var socialCommentsItems = socialCommentsList.querySelectorAll('.social__comment');
@@ -69,16 +75,27 @@
     socialCommentsList.appendChild(fragment);
   };
 
+  var showTopFilter = function () {
+    topFilter.classList.remove('img-filters--inactive');
+  };
+
+  var addListeners = function (obj) {
+    topFilterBtns.random.addEventListener('click', function (evt) {
+      var arrayForRandom = obj.slice();
+      arrayForRandom.sort(() => Math.random() - 0.5);
+      console.dir(arrayForRandom);
+      console.dir(obj);
+    });
+  };
+
   var renderItems = function (obj) {
-    //var length = obj.length;
-    //var getRandomElemFromArr = obj[window.utils.getRandomNum(length)];
     appendPhotos(obj);
-    //renderBigPhotoAndDescription(getRandomElemFromArr);
+    showTopFilter();
+    addListeners(obj);
   };
 
   var hideBigPhotoOverlay = function (overlay, btns) {
     var btnHandler = window.utils.btnClickHandler(function () {
-      console.log(1213);
       overlay.classList.add('hidden');
     });
     var keydownHandler = window.utils.escKeydownHandler(function () {
