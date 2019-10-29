@@ -98,16 +98,26 @@
     arrayForRandom.splice(RANDOM_FILTER_LIMIT);
     return arrayForRandom;
   };
+  
+  var getDiscussedArray = function (array) {
+    var arrayForDiscussed = array.slice().sort((a, b) =>  b.likes - a.likes);
+    return arrayForDiscussed;
+  };
 
   var addListeners = function (obj) {
+    topFilterBtns.popular.addEventListener('click', function (evt) {
+      setActiveForBtn(evt.target);
+      appendPhotos(obj);
+    });
     topFilterBtns.random.addEventListener('click', function (evt) {
       setActiveForBtn(evt.target);
       var randomArray = getRandomArray(obj);
       appendPhotos(randomArray);
     });
-    topFilterBtns.popular.addEventListener('click', function (evt) {
+    topFilterBtns.discussed.addEventListener('click', function (evt) {
       setActiveForBtn(evt.target);
-      appendPhotos(obj);
+      var discussedArray = getDiscussedArray(obj);
+      appendPhotos(discussedArray);
     });
   };
 
