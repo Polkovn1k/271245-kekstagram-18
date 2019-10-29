@@ -9,16 +9,17 @@
   var socialCommentsList = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
   var topFilter = document.querySelector('.img-filters');
+  var RANDOM_FILTER_LIMIT = 10;
   var topFilterBtns = {
     popular: topFilter.querySelector('#filter-popular'),
     random: topFilter.querySelector('#filter-random'),
     discussed: topFilter.querySelector('#filter-discussed'),
   };
+  var filterBtns = document.querySelectorAll('.img-filters__button');
 
-  var clearPreviousComments = function () {
-    var socialCommentsItems = socialCommentsList.querySelectorAll('.social__comment');
-    for (var i = 0; i < socialCommentsItems.length; i++) {
-      socialCommentsItems[i].remove();
+  var deleteNodes = function (nodes) {
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].remove();
     }
   };
 
@@ -40,11 +41,16 @@
   var addListener = function (element, objProps) {
     element.addEventListener('click', function (evt) {
       evt.preventDefault();
-      clearPreviousComments();
+      var socialCommentsItems = socialCommentsList.querySelectorAll('.social__comment');
+      deleteNodes(socialCommentsItems);
       renderBigPhotoAndDescription(objProps);
       appendNewComments(objProps.comments);
       photoBlock.classList.remove('hidden');
     });
+  };
+
+  var removeThumbnails = function () {
+    document.querySelectorAll('.picture');
   };
 
   var appendPhotos = function (arr) {
@@ -55,6 +61,7 @@
       fragment.appendChild(imgNode);
       addListener(imgNode, props);
     }
+    deleteNodes(document.querySelectorAll('.picture'));
     picturesContainer.appendChild(fragment);
   };
 
@@ -78,13 +85,29 @@
   var showTopFilter = function () {
     topFilter.classList.remove('img-filters--inactive');
   };
+  
+  var setActiveForBtn = function (currentBtn) {
+    filterBtns.forEach(function (btn){
+      btn.classList.remove('img-filters__button--active');
+    });
+    currentBtn.classList.add('img-filters__button--active');
+  };
+
+  var getRandomArray = function (array) {
+    var arrayForRandom = array.slice().sort(() => Math.random() - 0.5);
+    arrayForRandom.splice(RANDOM_FILTER_LIMIT);
+    return arrayForRandom;
+  };
 
   var addListeners = function (obj) {
     topFilterBtns.random.addEventListener('click', function (evt) {
-      var arrayForRandom = obj.slice();
-      arrayForRandom.sort(() => Math.random() - 0.5);
-      console.dir(arrayForRandom);
-      console.dir(obj);
+      setActiveForBtn(evt.target);
+      var randomArray = getRandomArray(obj);
+      appendPhotos(randomArray);
+    });
+    topFilterBtns.popular.addEventListener('click', function (evt) {
+      setActiveForBtn(evt.target);
+      appendPhotos(obj);
     });
   };
 
