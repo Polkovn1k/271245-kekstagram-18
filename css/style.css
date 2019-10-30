@@ -180,6 +180,10 @@ main {
   border-radius: 2px;
 }
 
+.img-filters__button--active {
+  pointer-events: none;
+}
+
 .img-filters__label {
   padding: 5px 15px;
 

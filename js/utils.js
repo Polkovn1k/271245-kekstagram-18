@@ -49,6 +49,22 @@
       };
     },
 
+    debounce: function (eventFunc, waitTimeInTimeout, immediateFlag) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var callNow = immediateFlag && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+          timeout = null;
+          if (!immediateFlag) {
+            eventFunc.apply(context, args);
+          }
+        }, waitTimeInTimeout);
+        if (callNow) eventFunc.apply(context, args);
+      };
+    },
+
     closeImgUploadOverlay: function () {
       window.pinPositionDefaultSettings();
       window.data.uploadedImg.className = '';
