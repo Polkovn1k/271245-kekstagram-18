@@ -67,12 +67,19 @@
   };
 
   var appendNewComments = function (nodeElements) {
-    var fragment = document.createDocumentFragment();
-    console.dir(nodeElements);
-    for (var i = 0; i < nodeElements.length; i++) {
-      fragment.appendChild(renderComments(nodeElements[i]));
+    if (nodeElements.length <= 5) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < nodeElements.length; i++) {
+        fragment.appendChild(renderComments(nodeElements[i]));
+      }
+      socialCommentsList.appendChild(fragment);
+    } else {
+      var loadComments = document.querySelector('.comments-loader');
+      loadComments.classList.remove('visually-hidden');
+      loadComments.addEventListener('click', function () {
+        var splitedArray = nodeElements.slice();//тут получили дубликат массива для дальнейших манипуляций с ним
+      });
     }
-    socialCommentsList.appendChild(fragment);
   };
 
   var showTopFilter = function () {
