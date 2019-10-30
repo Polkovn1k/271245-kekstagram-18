@@ -10,11 +10,6 @@
   var uploadInputLabel = document.querySelector('.img-upload__label');
   var topFilter = document.querySelector('.img-filters');
   var RANDOM_FILTER_LIMIT = 10;
-  var topFilterBtns = {
-    popular: topFilter.querySelector('#filter-popular'),
-    random: topFilter.querySelector('#filter-random'),
-    discussed: topFilter.querySelector('#filter-discussed'),
-  };
   var filterBtns = document.querySelectorAll('.img-filters__button');
   var topFilterForm = document.querySelector('.img-filters__form');
 
@@ -50,10 +45,6 @@
     });
   };
 
-  var removeThumbnails = function () {
-    document.querySelectorAll('.picture');
-  };
-
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
@@ -77,6 +68,7 @@
 
   var appendNewComments = function (nodeElements) {
     var fragment = document.createDocumentFragment();
+    console.dir(nodeElements);
     for (var i = 0; i < nodeElements.length; i++) {
       fragment.appendChild(renderComments(nodeElements[i]));
     }
