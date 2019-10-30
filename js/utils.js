@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  
+
   window.utils = {
     getRandomNum: function (max, min) {
       if (min === undefined) {
@@ -46,6 +46,22 @@
         if (remove === 'remove') {
           document.removeEventListener('click', clickHandler);
         }
+      };
+    },
+
+    debounce: function (eventFunc, waitTimeInTimeout, immediateFlag) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var callNow = immediateFlag && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+          timeout = null;
+          if (!immediateFlag) {
+            eventFunc.apply(context, args);
+          }
+        }, waitTimeInTimeout);
+        if (callNow) eventFunc.apply(context, args);
       };
     },
 
