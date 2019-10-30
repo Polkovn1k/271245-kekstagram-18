@@ -76,8 +76,25 @@
     } else {
       var loadComments = document.querySelector('.comments-loader');
       loadComments.classList.remove('visually-hidden');
+      var startIndex = 0;
+      var endIndex = 5;
+      var newArr = nodeElements.slice(startIndex, endIndex);
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < newArr.length; i++) {
+        fragment.appendChild(renderComments(newArr[i]));
+      }
+      socialCommentsList.appendChild(fragment);
       loadComments.addEventListener('click', function () {
-        var splitedArray = nodeElements.slice();//тут получили дубликат массива для дальнейших манипуляций с ним
+        startIndex +=5;
+        endIndex +=5;
+        newArr = nodeElements.slice(startIndex, endIndex);
+        console.dir(newArr);
+        console.dir(nodeElements);
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < newArr.length; i++) {
+          fragment.appendChild(renderComments(newArr[i]));
+        }
+        socialCommentsList.appendChild(fragment);
       });
     }
   };
