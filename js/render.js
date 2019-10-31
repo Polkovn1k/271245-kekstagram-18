@@ -10,8 +10,10 @@
   var uploadInputLabel = document.querySelector('.img-upload__label');
   var topFilter = document.querySelector('.img-filters');
   var RANDOM_FILTER_LIMIT = 10;
+  var SHOW_COMMENTS_LIMIT = 5;
   var filterBtns = document.querySelectorAll('.img-filters__button');
   var topFilterForm = document.querySelector('.img-filters__form');
+  var loadComments = document.querySelector('.comments-loader');
 
   var deleteNodes = function (nodes) {
     for (var i = 0; i < nodes.length; i++) {
@@ -66,35 +68,32 @@
     return nodeElement;
   };
 
+  var renderNewComments = function (arr) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < arr.length; i++) {
+      fragment.appendChild(renderComments(arr[i]));
+    }
+    socialCommentsList.appendChild(fragment);
+  };
+
+  var hideLoadBtn = function (arr) {
+    if (arr.length < SHOW_COMMENTS_LIMIT) {
+      loadComments.classList.add('visually-hidden');
+    }
+  };
+  
   var appendNewComments = function (nodeElements) {
-    if (nodeElements.length <= 5) {
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < nodeElements.length; i++) {
-        fragment.appendChild(renderComments(nodeElements[i]));
-      }
-      socialCommentsList.appendChild(fragment);
+    if (nodeElements.length <= SHOW_COMMENTS_LIMIT) {
+      renderNewComments(nodeElements);
     } else {
-      var loadComments = document.querySelector('.comments-loader');
       loadComments.classList.remove('visually-hidden');
-      var startIndex = 0;
-      var endIndex = 5;
+      var startIndex = 0, endIndex = SHOW_COMMENTS_LIMIT;
       var newArr = nodeElements.slice(startIndex, endIndex);
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < newArr.length; i++) {
-        fragment.appendChild(renderComments(newArr[i]));
-      }
-      socialCommentsList.appendChild(fragment);
+      renderNewComments(newArr);
       loadComments.addEventListener('click', function () {
-        startIndex +=5;
-        endIndex +=5;
-        newArr = nodeElements.slice(startIndex, endIndex);
-        console.dir(newArr);
-        console.dir(nodeElements);
-        var fragment = document.createDocumentFragment();
-        for (var i = 0; i < newArr.length; i++) {
-          fragment.appendChild(renderComments(newArr[i]));
-        }
-        socialCommentsList.appendChild(fragment);
+        newArr = nodeElements.slice(startIndex +=SHOW_COMMENTS_LIMIT, endIndex +=SHOW_COMMENTS_LIMIT);
+        renderNewComments(newArr);
+        hideLoadBtn(newArr);
       });
     }
   };
