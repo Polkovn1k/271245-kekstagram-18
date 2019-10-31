@@ -143,7 +143,7 @@
   };
 
   var addListeners = function (obj) {
-    var debouncedEvent = window.utils.debounce(topFilterBtnClickHandler(obj), 500, false);
+    var debouncedEvent = window.utils.debounce(topFilterBtnClickHandler(obj), 500, false, topFilterForm);
     topFilterForm.addEventListener('click', debouncedEvent);
   };
 
