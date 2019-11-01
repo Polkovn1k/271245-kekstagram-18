@@ -49,21 +49,15 @@
       };
     },
 
-    debounce: function (eventFunc, waitTimeInTimeout, immediateFlag, elementOnEvent) {
+    debounce: function (eventFunc, waitTimeInTimeout) {
       var timeout;
       return function () {
         var args = arguments;
-        var callNow = immediateFlag && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(function () {
           timeout = null;
-          if (!immediateFlag) {
-            eventFunc.apply(elementOnEvent, args);
-          }
+          eventFunc.apply(null, args);
         }, waitTimeInTimeout);
-        if (callNow) {
-          eventFunc.apply(elementOnEvent, args);
-        }
       };
     },
 

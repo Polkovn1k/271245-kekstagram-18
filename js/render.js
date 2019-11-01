@@ -42,7 +42,7 @@
       var socialCommentsItems = socialCommentsList.querySelectorAll('.social__comment');
       deleteNodes(socialCommentsItems);
       renderBigPhotoAndDescription(objProps);
-      appendNewComments(objProps.comments);
+      showComments(objProps.comments);
       photoBlock.classList.remove('hidden');
     });
   };
@@ -68,7 +68,7 @@
     return nodeElement;
   };
 
-  var renderNewComments = function (arr) {
+  var comments = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
       fragment.appendChild(renderComments(arr[i]));
@@ -76,25 +76,29 @@
     socialCommentsList.appendChild(fragment);
   };
 
-  var hideLoadBtn = function (arr) {
-    if (arr.length < SHOW_COMMENTS_LIMIT) {
-      loadComments.classList.add('visually-hidden');
-    }
+  var hideLoadBtn = function () {
+    loadComments.classList.add('visually-hidden');
   };
 
-  var appendNewComments = function (nodeElements) {
-    if (nodeElements.length <= SHOW_COMMENTS_LIMIT) {
-      renderNewComments(nodeElements);
+  var appendNewComments = function (cmts, startIndex) {
+    var newComments = cmts.slice(startIndex, startIndex + SHOW_COMMENTS_LIMIT);
+    comments(newComments);
+    if (newComments.length < SHOW_COMMENTS_LIMIT) {
+      hideLoadBtn();
+    }
+  }
+
+  var showComments = function (commentsArr) {
+    if (commentsArr.length <= SHOW_COMMENTS_LIMIT) {
+      comments(commentsArr);
     } else {
       loadComments.classList.remove('visually-hidden');
       var startIndex = 0;
-      var endIndex = SHOW_COMMENTS_LIMIT;
-      var newArr = nodeElements.slice(startIndex, endIndex);
-      renderNewComments(newArr);
+      var newArr = commentsArr.slice(startIndex, startIndex + SHOW_COMMENTS_LIMIT);
+      comments(newArr);
       loadComments.addEventListener('click', function () {
-        newArr = nodeElements.slice(startIndex += SHOW_COMMENTS_LIMIT, endIndex += SHOW_COMMENTS_LIMIT);
-        renderNewComments(newArr);
-        hideLoadBtn(newArr);
+        startIndex += SHOW_COMMENTS_LIMIT;
+        appendNewComments(commentsArr, startIndex);
       });
     }
   };
@@ -143,7 +147,7 @@
   };
 
   var addListeners = function (obj) {
-    var debouncedEvent = window.utils.debounce(topFilterBtnClickHandler(obj), 500, false, topFilterForm);
+    var debouncedEvent = window.utils.debounce(topFilterBtnClickHandler(obj), 500);
     topFilterForm.addEventListener('click', debouncedEvent);
   };
 
