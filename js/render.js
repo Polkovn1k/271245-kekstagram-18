@@ -130,19 +130,15 @@
     return arrayForDiscussed;
   };
 
-  var topFilterBtnClickHandler = function (evt, obj) {
-    if (evt.target.id === 'filter-popular') {
-      setActiveForBtn(evt.target);
-      appendPhotos(obj);
-    } else if (evt.target.id === 'filter-random') {
-      setActiveForBtn(evt.target);
-      var randomArray = getRandomArray(obj);
-      appendPhotos(randomArray);
-    } else if (evt.target.id === 'filter-discussed') {
-      setActiveForBtn(evt.target);
-      var discussedArray = getDiscussedArray(obj);
-      appendPhotos(discussedArray);
+  var topFilterBtnClickHandler = function (evt, photos) {
+    if (evt.target.id === 'filter-random') {
+      photos = getRandomArray(photos);
     }
+    if (evt.target.id === 'filter-discussed') {
+      photos = getDiscussedArray(photos);
+    }
+    setActiveForBtn(evt.target);
+    appendPhotos(photos);
   };
 
   var addListeners = function (obj) {
@@ -162,12 +158,10 @@
     var btnHandler = window.utils.btnClickHandler(function () {
       overlay.classList.add('hidden');
       loadComments.removeEventListener('click', window.addCommentBtnClickHandler);
-      //ВОТ ТУТ НАДО УДАЛЯТЬ ЛИСНЕР!
     });
     var keydownHandler = window.utils.escKeydownHandler(function () {
       overlay.classList.add('hidden');
       loadComments.removeEventListener('click', window.addCommentBtnClickHandler);
-      //ВОТ ТУТ НАДО УДАЛЯТЬ ЛИСНЕР!
     });
     btns.addEventListener('click', btnHandler);
     overlay.addEventListener('click', btnHandler);

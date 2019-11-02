@@ -12,6 +12,9 @@
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
   };
   var EFFECT_DEFAULT_VAL = 100;
+  var SCALE_MIN = 0;
+  var SCALE_STEP = 25;
+  var SCALE_PRE_FINAL = 75;
   var draged = false;
 
   var inputChangeHandler = function () {
@@ -21,9 +24,9 @@
   window.updateScaleValue = function (operationType) {
     var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
     if (operationType === 'smaller') {
-      scaleValue = (scaleValue < 25) ? 0 : scaleValue - 25;
+      scaleValue = (scaleValue < SCALE_STEP) ? SCALE_MIN : scaleValue - SCALE_STEP;
     } else if (operationType === 'bigger') {
-      scaleValue = (scaleValue > 75) ? 100 : scaleValue + 25;
+      scaleValue = (scaleValue > SCALE_PRE_FINAL) ? EFFECT_DEFAULT_VAL : scaleValue + SCALE_STEP;
     } else {
       scaleValue = EFFECT_DEFAULT_VAL;
     }
@@ -63,30 +66,32 @@
   window.setEffectForImg = function (number) {
     var reset = number === undefined || number === 'default';
     var filterType = reset ? 'default' : getCheckedInput();
+    var style;
     switch (filterType) {
       case 'none':
-        nodes.uploadedImg.style.filter = 'none';
+        style = 'none';
         window.utils.closeImgUploadOverlay();
         break;
       case 'chrome':
-        nodes.uploadedImg.style.filter = 'grayscale(' + number / 100 + ')';
+        style = 'grayscale(' + number / 100 + ')';
         break;
       case 'sepia':
-        nodes.uploadedImg.style.filter = 'sepia(' + number / 100 + ')';
+        style = 'sepia(' + number / 100 + ')';
         break;
       case 'marvin':
-        nodes.uploadedImg.style.filter = 'invert(' + number + '%)';
+        style = 'invert(' + number + '%)';
         break;
       case 'phobos':
-        nodes.uploadedImg.style.filter = 'blur(' + number * (3 / 100) + 'px)';
+        style = 'blur(' + number * (3 / 100) + 'px)';
         break;
       case 'heat':
-        nodes.uploadedImg.style.filter = 'brightness(' + number * (3 / 100) + ')';
+        style = 'brightness(' + number * (3 / 100) + ')';
         break;
       case 'default':
-        nodes.uploadedImg.style.filter = 'none';
+        style = 'none';
         break;
     }
+    nodes.uploadedImg.style.filter = style;
   };
 
   var setValues = function (numtype) {

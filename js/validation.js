@@ -22,9 +22,10 @@
   };
 
   var wordsDublicate = function () {
-    for (var i = 0; i < getWordsArr().length; i++) {
-      for (var j = i + 1; j < getWordsArr().length; j++) {
-        if (getWordsArr()[i] === getWordsArr()[j]) {
+    var words = getWordsArr();
+    for (var i = 0; i < words.length; i++) {
+      for (var j = i + 1; j < words.length; j++) {
+        if (words[i] === words[j]) {
           return true;
         }
       }
