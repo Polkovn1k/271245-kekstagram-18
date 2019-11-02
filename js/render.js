@@ -80,13 +80,13 @@
     loadComments.classList.add('visually-hidden');
   };
 
-  var appendNewComments = function (cmts, startIndex) {
-    var newComments = cmts.slice(startIndex, startIndex + SHOW_COMMENTS_LIMIT);
+  var appendNewComments = function (commentsArr, startIndex) {
+    var newComments = commentsArr.slice(startIndex, startIndex + SHOW_COMMENTS_LIMIT);
     comments(newComments);
     if (newComments.length < SHOW_COMMENTS_LIMIT) {
       hideLoadBtn();
     }
-  }
+  };
 
   var showComments = function (commentsArr) {
     if (commentsArr.length <= SHOW_COMMENTS_LIMIT) {
@@ -129,7 +129,7 @@
     return arrayForDiscussed;
   };
 
-  var topFilterBtnClickHandler = function (obj) {
+  /*var topFilterBtnClickHandler = function (obj) {
     return function (evt) {
       if (evt.target.id === 'filter-popular') {
         setActiveForBtn(evt.target);
@@ -144,10 +144,27 @@
         appendPhotos(discussedArray);
       }
     };
+  };*/
+
+  var topFilterBtnClickHandler = function (evt, obj) {
+    if (evt.target.id === 'filter-popular') {
+      setActiveForBtn(evt.target);
+      appendPhotos(obj);
+    } else if (evt.target.id === 'filter-random') {
+      setActiveForBtn(evt.target);
+      var randomArray = getRandomArray(obj);
+      appendPhotos(randomArray);
+    } else if (evt.target.id === 'filter-discussed') {
+      setActiveForBtn(evt.target);
+      var discussedArray = getDiscussedArray(obj);
+      appendPhotos(discussedArray);
+    }
   };
 
   var addListeners = function (obj) {
-    var debouncedEvent = window.utils.debounce(topFilterBtnClickHandler(obj), 500);
+    var debouncedEvent = window.utils.debounce(function (evt) {
+      topFilterBtnClickHandler(evt, obj);
+    }, 500);
     topFilterForm.addEventListener('click', debouncedEvent);
   };
 
