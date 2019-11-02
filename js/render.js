@@ -4,7 +4,7 @@
   var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var picturesContainer = document.querySelector('.pictures');
   var photoBlock = document.querySelector('.big-picture');
-  var photoBlockCancel = photoBlock.querySelectorAll('.big-picture__cancel');
+  var photoBlockCancel = photoBlock.querySelector('.big-picture__cancel');
   var commentBlock = document.querySelector('#photo').content.querySelector('.social__comment');
   var socialCommentsList = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
@@ -96,10 +96,11 @@
       var startIndex = 0;
       var newArr = commentsArr.slice(startIndex, startIndex + SHOW_COMMENTS_LIMIT);
       comments(newArr);
-      loadComments.addEventListener('click', function () {
+      window.addCommentBtnClickHandler = function () {
         startIndex += SHOW_COMMENTS_LIMIT;
         appendNewComments(commentsArr, startIndex);
-      });
+      };
+      loadComments.addEventListener('click', window.addCommentBtnClickHandler);
     }
   };
 
@@ -128,23 +129,6 @@
     });
     return arrayForDiscussed;
   };
-
-  /*var topFilterBtnClickHandler = function (obj) {
-    return function (evt) {
-      if (evt.target.id === 'filter-popular') {
-        setActiveForBtn(evt.target);
-        appendPhotos(obj);
-      } else if (evt.target.id === 'filter-random') {
-        setActiveForBtn(evt.target);
-        var randomArray = getRandomArray(obj);
-        appendPhotos(randomArray);
-      } else if (evt.target.id === 'filter-discussed') {
-        setActiveForBtn(evt.target);
-        var discussedArray = getDiscussedArray(obj);
-        appendPhotos(discussedArray);
-      }
-    };
-  };*/
 
   var topFilterBtnClickHandler = function (evt, obj) {
     if (evt.target.id === 'filter-popular') {
@@ -177,13 +161,15 @@
   var hideBigPhotoOverlay = function (overlay, btns) {
     var btnHandler = window.utils.btnClickHandler(function () {
       overlay.classList.add('hidden');
+      loadComments.removeEventListener('click', window.addCommentBtnClickHandler);
+      //ВОТ ТУТ НАДО УДАЛЯТЬ ЛИСНЕР!
     });
     var keydownHandler = window.utils.escKeydownHandler(function () {
       overlay.classList.add('hidden');
+      loadComments.removeEventListener('click', window.addCommentBtnClickHandler);
+      //ВОТ ТУТ НАДО УДАЛЯТЬ ЛИСНЕР!
     });
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', btnHandler);
-    }
+    btns.addEventListener('click', btnHandler);
     overlay.addEventListener('click', btnHandler);
     document.addEventListener('keydown', keydownHandler);
   };
