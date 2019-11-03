@@ -35,7 +35,7 @@
   var setNodeErrorStyle = function (node, isError) {
     node.style.boxShadow = isError ? INPUT_ERROR_STYLE : INPUT_VALID_STYLE;
   };
-
+  
   var getInvalidTags = function (words) {
     for (var i = 0; i < words.length; i++) {
       if (words[i].charAt(0) !== '#') {
