@@ -7,6 +7,7 @@
     scaleUp: window.data.imgUploadOverlay.querySelector('.scale__control--bigger'),
     scaleInput: window.data.imgUploadOverlay.querySelector('.scale__control--value'),
     effectsRadio: window.data.imgUploadOverlay.querySelectorAll('.effects__radio'),
+    pinContainer: window.data.imgUploadOverlay.querySelector('.img-upload__effect-level'),
     effectLevelPin: window.data.imgUploadOverlay.querySelector('.effect-level__pin'),
     effectLevelLine: window.data.imgUploadOverlay.querySelector('.effect-level__line'),
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
@@ -68,22 +69,27 @@
     switch (filterType) {
       case 'none':
         style = 'none';
-        window.utils.closeImgUploadOverlay();
+        nodes.pinContainer.classList.add('visually-hidden');
         break;
       case 'chrome':
         style = 'grayscale(' + number / 100 + ')';
+        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'sepia':
         style = 'sepia(' + number / 100 + ')';
+        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'marvin':
         style = 'invert(' + number + '%)';
+        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'phobos':
         style = 'blur(' + number * (3 / 100) + 'px)';
+        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'heat':
         style = 'brightness(' + number * (3 / 100) + ')';
+        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'default':
         style = 'none';
