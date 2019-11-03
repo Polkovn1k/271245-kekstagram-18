@@ -108,7 +108,7 @@
     window.upload(new FormData(form), function () {
       window.utils.closeImgUploadOverlay();
       window.showSuccess();
-    });
+    }, window.logError);
     evt.preventDefault();
   });
 })();

@@ -26,6 +26,7 @@
   };
 
   window.logError = function () {
+    window.utils.closeImgUploadOverlay();
     var errorOverlay = showModal(errorBlockTemplate);
     var errorBtn = errorOverlay.querySelectorAll('.error__button');
     modalEvents(errorOverlay, errorBtn);
