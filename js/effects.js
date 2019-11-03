@@ -12,7 +12,6 @@
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
   };
   var EFFECT_DEFAULT_VAL = 100;
-  var SCALE_MIN = 0;
   var SCALE_STEP = 25;
   var SCALE_PRE_FINAL = 75;
   var draged = false;
@@ -24,7 +23,7 @@
   window.updateScaleValue = function (operationType) {
     var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
     if (operationType === 'smaller') {
-      scaleValue = (scaleValue < SCALE_STEP) ? SCALE_MIN : scaleValue - SCALE_STEP;
+      scaleValue = (scaleValue < SCALE_STEP) ? 0 : scaleValue - SCALE_STEP;
     } else if (operationType === 'bigger') {
       scaleValue = (scaleValue > SCALE_PRE_FINAL) ? EFFECT_DEFAULT_VAL : scaleValue + SCALE_STEP;
     } else {
@@ -55,12 +54,11 @@
   };
 
   var getCheckedInput = function () {
-    for (var i = 0; i < nodes.effectsRadio.length; i++) {
-      if (nodes.effectsRadio[i].checked) {
-        return nodes.effectsRadio[i].value;
-      }
-    }
-    return false;
+    var radios = Array.from(nodes.effectsRadio);
+    var element = radios.find(function (item) {
+      return item.checked;
+    });
+    return element ? element.value : null;
   };
 
   window.setEffectForImg = function (number) {
@@ -101,9 +99,9 @@
   };
 
   var setImgEffect = function () {
-    for (var i = 0; i < nodes.effectsRadio.length; i++) {
-      nodes.effectsRadio[i].addEventListener('change', radioChangeHandler);
-    }
+    nodes.effectsRadio.forEach(function (item) {
+      item.addEventListener('change', radioChangeHandler);
+    });
   };
 
   var radioChangeHandler = function () {

@@ -23,14 +23,13 @@
 
   var wordsDublicate = function () {
     var words = getWordsArr();
-    for (var i = 0; i < words.length; i++) {
-      for (var j = i + 1; j < words.length; j++) {
-        if (words[i] === words[j]) {
-          return true;
-        }
-      }
-    }
-    return false;
+    var wordsForComparison = words.slice();
+    return words.some(function (item) {
+      wordsForComparison.splice(0, 1);
+      return wordsForComparison.some(function (innerItem) {
+        return item === innerItem;
+      });
+    });
   };
 
   var setNodeErrorStyle = function (node, isError) {

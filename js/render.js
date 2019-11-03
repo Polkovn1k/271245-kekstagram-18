@@ -15,10 +15,11 @@
   var topFilterForm = document.querySelector('.img-filters__form');
   var loadComments = document.querySelector('.comments-loader');
 
+
   var deleteNodes = function (nodes) {
-    for (var i = 0; i < nodes.length; i++) {
-      nodes[i].remove();
-    }
+    nodes.forEach(function (item) {
+      item.remove();
+    });
   };
 
   var renderPhoto = function (photoArr) {
@@ -49,12 +50,11 @@
 
   var appendPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      var props = arr[i];
-      var imgNode = renderPhoto(props);
+    arr.forEach(function (item) {
+      var imgNode = renderPhoto(item);
       fragment.appendChild(imgNode);
-      addListener(imgNode, props);
-    }
+      addListener(imgNode, item);
+    });
     deleteNodes(document.querySelectorAll('.picture'));
     picturesContainer.appendChild(fragment);
   };
@@ -70,9 +70,9 @@
 
   var comments = function (arr) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(renderComments(arr[i]));
-    }
+    arr.forEach(function (item) {
+      fragment.appendChild(renderComments(item));
+    });
     socialCommentsList.appendChild(fragment);
   };
 

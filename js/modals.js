@@ -18,9 +18,9 @@
     var keydownHandler = window.utils.escKeydownHandler(function () {
       overlay.remove();
     }, 'remove');
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', btnHandler);
-    }
+    btns.forEach(function (item) {
+      item.addEventListener('click', btnHandler);
+    });
     overlay.addEventListener('click', btnHandler);
     document.addEventListener('keydown', keydownHandler);
   };

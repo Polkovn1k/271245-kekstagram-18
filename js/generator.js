@@ -12,9 +12,9 @@
   };
 
   var pushEntityToArray = function (entityArr) {
-    for (var j = 1; j <= window.data.render.ENTITY_LIMIT; j++) {
-      entityArr.push(makeEntity(j));
-    }
+    window.data.render.ENTITY_LIMIT.forEach(function (item, i) {
+      entityArr.push(makeEntity(i));
+    });
   };
 
   var setTextProp = function (textArray) {
