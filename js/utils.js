@@ -4,6 +4,15 @@
 
   window.utils = {
 
+    showOrHidePinFilter: function (filter) {
+      var pinContainer = document.querySelector('.img-upload__effect-level');
+      if (filter === 'none') {
+        pinContainer.classList.add('visually-hidden');
+      } else {
+        pinContainer.classList.remove('visually-hidden');
+      }
+    },
+
     documentKeydownHandler: function (evt) {
       if (evt.keyCode === window.data.KEY_CODE_ESC) {
         window.utils.closeImgUploadOverlay();
@@ -11,6 +20,7 @@
     },
 
     openImgUploadOverlay: function () {
+      window.utils.showOrHidePinFilter('none');
       window.data.imgUploadOverlay.classList.remove('hidden');
       document.addEventListener('keydown', window.utils.documentKeydownHandler);
     },

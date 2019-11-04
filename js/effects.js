@@ -10,7 +10,6 @@
     scaleUp: window.data.imgUploadOverlay.querySelector('.scale__control--bigger'),
     scaleInput: window.data.imgUploadOverlay.querySelector('.scale__control--value'),
     effectsRadio: window.data.imgUploadOverlay.querySelectorAll('.effects__radio'),
-    pinContainer: window.data.imgUploadOverlay.querySelector('.img-upload__effect-level'),
     effectLevelPin: window.data.imgUploadOverlay.querySelector('.effect-level__pin'),
     effectLevelLine: window.data.imgUploadOverlay.querySelector('.effect-level__line'),
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
@@ -62,14 +61,6 @@
     return element ? element.value : null;
   };
 
-  var showOrHidePinFilter = function (filter) {
-    if (filter === 'none') {
-      nodes.pinContainer.classList.add('visually-hidden');
-    } else {
-      nodes.pinContainer.classList.remove('visually-hidden');
-    }
-  };
-
   window.setEffectForImg = function (number) {
     var reset = number === undefined || number === 'default';
     var filterType = reset ? 'default' : getCheckedInput();
@@ -97,7 +88,7 @@
         style = 'none';
         break;
     }
-    showOrHidePinFilter(filterType);
+    window.utils.showOrHidePinFilter(filterType);
     nodes.uploadedImg.style.filter = style;
   };
 
