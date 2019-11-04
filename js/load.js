@@ -2,6 +2,8 @@
 
 (function () {
 
+  var URL = 'https://js.dump.academy/kekstagram';
+
   window.load = function (url, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -28,8 +30,6 @@
     xhr.open('GET', url);
     xhr.send();
   };
-
-  var URL = 'https://js.dump.academy/kekstagram';
 
   window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();

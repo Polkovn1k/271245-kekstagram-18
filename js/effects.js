@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var EFFECT_DEFAULT_VAL = 100;
+  var SCALE_STEP = 25;
+  var SCALE_PRE_FINAL = 75;
   var nodes = {
     uploadedImg: window.data.imgUploadOverlay.querySelector('.img-upload__preview img'),
     scaleDown: window.data.imgUploadOverlay.querySelector('.scale__control--smaller'),
@@ -12,9 +15,6 @@
     effectLevelLine: window.data.imgUploadOverlay.querySelector('.effect-level__line'),
     effectLevelValue: window.data.imgUploadOverlay.querySelector('.effect-level__value'),
   };
-  var EFFECT_DEFAULT_VAL = 100;
-  var SCALE_STEP = 25;
-  var SCALE_PRE_FINAL = 75;
   var draged = false;
 
   var inputChangeHandler = function () {

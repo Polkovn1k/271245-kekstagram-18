@@ -10,7 +10,7 @@
     lineDepth.style.width = pinPosition + 'px';
   };
 
-  var pinPositionSettings = function (shift) {
+  var setPinPositionSettings = function (shift) {
     var pinPosition = slidersPin.offsetLeft - shift;
     slidersPin.style.left = pinPosition + 'px';
     if (slidersPin.offsetLeft < 0) {
@@ -39,7 +39,7 @@
       var xShift = xCoordinate - movEvt.clientX;
       xCoordinate = movEvt.clientX;
       if (xCoordinate > limit.leftSide && xCoordinate < limit.rightSide) {
-        pinPositionSettings(xShift);
+        setPinPositionSettings(xShift);
       }
     };
 

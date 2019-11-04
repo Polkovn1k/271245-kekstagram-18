@@ -17,12 +17,12 @@
   };
   var COMMENTS_ERROR_MESSAGES = 'Длина комментария не может быть больше ' + MAX_COMMENT_LENGTH;
 
-  var getWordsArr = function () {
+  var getSplitTags = function () {
     return window.data.hashTagsInput.value.toLowerCase().trim().split(' ');
   };
 
-  var wordsDublicate = function () {
-    var words = getWordsArr();
+  var isWordsDublicate = function () {
+    var words = getSplitTags();
     var wordsForComparison = words.slice();
     return words.some(function (item) {
       wordsForComparison.splice(0, 1);
@@ -51,7 +51,7 @@
     if (words.length > MAX_HASH_TAGS) {
       return tagsErrorMessages.MAX_HASH_COUNT;
     }
-    if (wordsDublicate()) {
+    if (isWordsDublicate()) {
       return tagsErrorMessages.EQUAL_HASH;
     }
     return VALID_FIELD_MESSAGE;
@@ -65,7 +65,7 @@
   };
 
   var checkInputValidity = function (input) {
-    var words = getWordsArr();
+    var words = getSplitTags();
     var invalidTagsMessage = getInvalidTags(words);
     var isValid = invalidTagsMessage !== VALID_FIELD_MESSAGE;
     setNodeErrorStyle(input, isValid);

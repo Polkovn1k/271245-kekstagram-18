@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var RANDOM_FILTER_LIMIT = 10;
+  var SHOW_COMMENTS_LIMIT = 5;
   var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var picturesContainer = document.querySelector('.pictures');
   var photoBlock = document.querySelector('.big-picture');
@@ -9,8 +11,6 @@
   var socialCommentsList = document.querySelector('.social__comments');
   var uploadInputLabel = document.querySelector('.img-upload__label');
   var topFilter = document.querySelector('.img-filters');
-  var RANDOM_FILTER_LIMIT = 10;
-  var SHOW_COMMENTS_LIMIT = 5;
   var filterBtns = document.querySelectorAll('.img-filters__button');
   var topFilterForm = document.querySelector('.img-filters__form');
   var loadComments = document.querySelector('.comments-loader');
