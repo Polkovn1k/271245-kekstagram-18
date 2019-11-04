@@ -62,6 +62,14 @@
     return element ? element.value : null;
   };
 
+  var showOrHidePinFilter = function (filter) {
+    if (filter === 'none') {
+      nodes.pinContainer.classList.add('visually-hidden');
+    } else {
+      nodes.pinContainer.classList.remove('visually-hidden');
+    }
+  };
+
   window.setEffectForImg = function (number) {
     var reset = number === undefined || number === 'default';
     var filterType = reset ? 'default' : getCheckedInput();
@@ -69,32 +77,27 @@
     switch (filterType) {
       case 'none':
         style = 'none';
-        nodes.pinContainer.classList.add('visually-hidden');
         break;
       case 'chrome':
         style = 'grayscale(' + number / 100 + ')';
-        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'sepia':
         style = 'sepia(' + number / 100 + ')';
-        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'marvin':
         style = 'invert(' + number + '%)';
-        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'phobos':
         style = 'blur(' + number * (3 / 100) + 'px)';
-        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'heat':
         style = 'brightness(' + number * (3 / 100) + ')';
-        nodes.pinContainer.classList.remove('visually-hidden');
         break;
       case 'default':
         style = 'none';
         break;
     }
+    showOrHidePinFilter(filterType);
     nodes.uploadedImg.style.filter = style;
   };
 
