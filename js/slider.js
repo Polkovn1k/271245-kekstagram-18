@@ -22,7 +22,7 @@
     setPinStyle(pinPosition);
   };
 
-  window.pinPositionDefaultSettings = function () {
+  window.setPinPositionDefaultSettings = function () {
     setPinStyle(fullLine.offsetWidth);
   };
 

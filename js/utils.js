@@ -66,7 +66,8 @@
     },
 
     closeImgUploadOverlay: function () {
-      window.pinPositionDefaultSettings();
+      document.querySelector('#effect-none').checked = true;
+      window.setPinPositionDefaultSettings();
       window.data.uploadedImg.className = '';
       window.utils.inputReset();
       window.updateScaleValue('default');
