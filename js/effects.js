@@ -50,7 +50,7 @@
   };
 
   var setEffectLevel = function (number) {
-    nodes.effectLevelValue.value = number;
+    nodes.effectLevelValue.value = Math.round(number);
   };
 
   var getCheckedInput = function () {
