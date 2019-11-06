@@ -168,12 +168,6 @@
     document.addEventListener('keydown', keydownHandler);
   };
 
-  uploadInputLabel.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.KEY_CODE_ENTER) {
-      window.utils.openImgUploadOverlay();
-    }
-  });
-
   window.data.uploadOverlayClose.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.KEY_CODE_ENTER) {
       window.utils.closeImgUploadOverlay();
