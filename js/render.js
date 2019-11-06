@@ -174,9 +174,17 @@
     }
   });
 
+  window.loadError = function (message) {
+    window.utils.closeImgUploadOverlay();
+    var errorOverlay = window.showModal(document.querySelector('#error').content.querySelector('.load-error'));
+    var errorBtn = errorOverlay.querySelectorAll('.error__button');
+    errorOverlay.querySelector('.error__text').innerText = message;
+    window.modalEvents(errorOverlay, errorBtn);
+  };
+
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 
-  window.load('https://js.dump.academy/kekstagram/data', renderItems, window.logError);
+  window.load('https://js.dump.academy/kekstagram/data', renderItems, window.loadError);
   hideBigPhotoOverlay(photoBlock, photoBlockCancel);
 })();

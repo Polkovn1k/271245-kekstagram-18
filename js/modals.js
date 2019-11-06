@@ -5,13 +5,13 @@
   var errorBlockTemplate = document.querySelector('#error').content.querySelector('.error');
   var successBlockTemplate = document.querySelector('#success').content.querySelector('.success');
 
-  var showModal = function (template) {
+  window.showModal = function (template) {
     var modal = template.cloneNode(true);
     document.querySelector('main').appendChild(modal);
     return modal;
   };
 
-  var modalEvents = function (overlay, btns) {
+  window.modalEvents = function (overlay, btns) {
     var btnHandler = window.utils.btnClickHandler(function () {
       overlay.remove();
     }, 'remove');
@@ -27,15 +27,15 @@
 
   window.logError = function () {
     window.utils.closeImgUploadOverlay();
-    var errorOverlay = showModal(errorBlockTemplate);
+    var errorOverlay = window.showModal(errorBlockTemplate);
     var errorBtn = errorOverlay.querySelectorAll('.error__button');
-    modalEvents(errorOverlay, errorBtn);
+    window.modalEvents(errorOverlay, errorBtn);
   };
 
   window.showSuccess = function () {
-    var successOverlay = showModal(successBlockTemplate);
+    var successOverlay = window.showModal(successBlockTemplate);
     var successBtn = successOverlay.querySelectorAll('.success__button');
-    modalEvents(successOverlay, successBtn);
+    window.modalEvents(successOverlay, successBtn);
   };
 
 })();
