@@ -70,8 +70,8 @@
       window.setPinPositionDefaultSettings();
       window.data.uploadedImg.className = '';
       window.utils.inputReset();
-      window.updateScaleValue('default');
-      window.setEffectForImg('default');
+      window.effects.updateScaleValue('default');
+      window.effects.setEffectForImg('default');
       document.removeEventListener('keydown', window.utils.documentKeydownHandler);
       window.data.imgUploadOverlay.classList.add('hidden');
     },

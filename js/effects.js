@@ -20,25 +20,60 @@
     window.utils.openImgUploadOverlay();
   };
 
-  window.updateScaleValue = function (operationType) {
-    var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
-    if (operationType === 'smaller') {
-      scaleValue = (scaleValue < SCALE_STEP) ? 0 : scaleValue - SCALE_STEP;
-    } else if (operationType === 'bigger') {
-      scaleValue = (scaleValue > SCALE_PRE_FINAL) ? EFFECT_DEFAULT_VAL : scaleValue + SCALE_STEP;
-    } else {
-      scaleValue = EFFECT_DEFAULT_VAL;
+  window.effects = {
+
+    updateScaleValue: function (operationType) {
+      var scaleValue = +nodes.scaleInput.value.substring(0, nodes.scaleInput.value.length - 1);
+      if (operationType === 'smaller') {
+        scaleValue = (scaleValue < SCALE_STEP) ? 0 : scaleValue - SCALE_STEP;
+      } else if (operationType === 'bigger') {
+        scaleValue = (scaleValue > SCALE_PRE_FINAL) ? EFFECT_DEFAULT_VAL : scaleValue + SCALE_STEP;
+      } else {
+        scaleValue = EFFECT_DEFAULT_VAL;
+      }
+      imgScale(scaleValue);
+      nodes.scaleInput.value = scaleValue + '%';
+    },
+
+    setEffectForImg: function (number) {
+      var reset = number === undefined || number === 'default';
+      var filterType = reset ? 'default' : getCheckedInput();
+      var style;
+      switch (filterType) {
+        case 'none':
+          style = 'none';
+          break;
+        case 'chrome':
+          style = 'grayscale(' + number / 100 + ')';
+          break;
+        case 'sepia':
+          style = 'sepia(' + number / 100 + ')';
+          break;
+        case 'marvin':
+          style = 'invert(' + number + '%)';
+          break;
+        case 'phobos':
+          style = 'blur(' + number * (3 / 100) + 'px)';
+          break;
+        case 'heat':
+          style = 'brightness(' + number * (3 / 100) + ')';
+          break;
+        case 'default':
+          style = 'none';
+          break;
+      }
+      window.utils.showOrHidePinFilter(filterType);
+      nodes.uploadedImg.style.filter = style;
     }
-    imgScale(scaleValue);
-    nodes.scaleInput.value = scaleValue + '%';
+
   };
 
   var smallerBtnClickHandler = function () {
-    window.updateScaleValue('smaller');
+    window.effects.updateScaleValue('smaller');
   };
 
   var biggerBtnClickHandler = function () {
-    window.updateScaleValue('bigger');
+    window.effects.updateScaleValue('bigger');
   };
 
   var imgScale = function (value) {
@@ -61,41 +96,10 @@
     return element ? element.value : null;
   };
 
-  window.setEffectForImg = function (number) {
-    var reset = number === undefined || number === 'default';
-    var filterType = reset ? 'default' : getCheckedInput();
-    var style;
-    switch (filterType) {
-      case 'none':
-        style = 'none';
-        break;
-      case 'chrome':
-        style = 'grayscale(' + number / 100 + ')';
-        break;
-      case 'sepia':
-        style = 'sepia(' + number / 100 + ')';
-        break;
-      case 'marvin':
-        style = 'invert(' + number + '%)';
-        break;
-      case 'phobos':
-        style = 'blur(' + number * (3 / 100) + 'px)';
-        break;
-      case 'heat':
-        style = 'brightness(' + number * (3 / 100) + ')';
-        break;
-      case 'default':
-        style = 'none';
-        break;
-    }
-    window.utils.showOrHidePinFilter(filterType);
-    nodes.uploadedImg.style.filter = style;
-  };
-
   var setValues = function (numtype) {
     var handlePosition = numtype;
     setEffectLevel(handlePosition);
-    window.setEffectForImg(handlePosition);
+    window.effects.setEffectForImg(handlePosition);
   };
 
   var setImgEffect = function () {
