@@ -177,7 +177,7 @@
   window.loadError = function (message) {
     window.utils.closeImgUploadOverlay();
     var errorOverlay = window.showModal(document.querySelector('#error').content.querySelector('.load-error'));
-    var errorBtn = errorOverlay.querySelectorAll('.error__button');
+    var errorBtn = errorOverlay.querySelectorAll('.error__btn');
     errorOverlay.querySelector('.error__text').innerText = message;
     window.modalEvents(errorOverlay, errorBtn);
   };

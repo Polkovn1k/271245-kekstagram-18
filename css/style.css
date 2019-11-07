@@ -1303,6 +1303,10 @@ main {
   border-radius: 10px;
 }
 
+.error__text {
+  margin-bottom: 15px;
+}
+
 .success__inner {
   padding: 100px 20px;
   padding-bottom: 75px;
@@ -1312,7 +1316,7 @@ main {
   position: relative;
 
   margin: 0;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 
   font-size: 32px;
 }
@@ -1342,7 +1346,8 @@ main {
 }
 
 .error__button,
-.success__button {
+.success__button,
+.error__btn {
   padding: 5px 10px;
 
   color: #ffffff;
@@ -1360,12 +1365,15 @@ main {
 .error__button:hover,
 .error__button:focus,
 .success__button:hover,
-.success__button:focus {
+.success__button:focus,
+.error__btn:hover,
+.error__btn:focus {
   opacity: 0.8;
 }
 
 .error__button:active,
-.success__button:active {
+.success__button:active,
+.error__btn:active {
   opacity: 0.6;
 }
 

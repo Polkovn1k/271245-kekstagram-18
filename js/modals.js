@@ -25,10 +25,11 @@
     document.addEventListener('keydown', keydownHandler);
   };
 
-  window.logError = function () {
+  window.uploadError = function (message) {
     window.utils.closeImgUploadOverlay();
     var errorOverlay = window.showModal(errorBlockTemplate);
     var errorBtn = errorOverlay.querySelectorAll('.error__button');
+    errorOverlay.querySelector('.error__text').innerText = message;
     window.modalEvents(errorOverlay, errorBtn);
   };
 

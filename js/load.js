@@ -13,7 +13,7 @@
       if (xhr.status === 200) {
         onSuccess(xhr.response);
       } else {
-        onError(xhr.status);
+        onError('Код ошибки: ' + xhr.status);
       }
     });
 
@@ -39,8 +39,12 @@
       if (xhr.status === 200) {
         onSuccess(xhr.response);
       } else {
-        onError(xhr.status);
+        onError('Код ошибки: ' + xhr.status);
       }
+    });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
     });
 
     xhr.open('POST', URL);
