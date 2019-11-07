@@ -107,8 +107,8 @@
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function () {
       window.utils.closeImgUploadOverlay();
-      window.showSuccess();
-    }, window.uploadError);
+      window.modals.showSuccess();
+    }, window.modals.uploadError);
     evt.preventDefault();
   });
 })();
