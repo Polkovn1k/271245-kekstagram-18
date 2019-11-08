@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var RANDOM_FILTER_LIMIT = 10;
   var SHOW_COMMENTS_LIMIT = 5;
   var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
