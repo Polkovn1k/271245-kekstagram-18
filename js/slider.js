@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var slidersPin = document.querySelector('.effect-level__pin');
   var fullLine = slidersPin.parentNode;
   var lineDepth = slidersPin.nextElementSibling;

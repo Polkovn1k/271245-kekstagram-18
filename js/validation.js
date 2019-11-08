@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var MAX_HASH_TAGS = 5;
   var MIN_HASH_LENGTH = 2;
   var MAX_HASH_LENGTH = 20;
