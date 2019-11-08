@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var EFFECT_DEFAULT_VAL = 100;
   var SCALE_STEP = 25;
   var SCALE_PRE_FINAL = 75;
