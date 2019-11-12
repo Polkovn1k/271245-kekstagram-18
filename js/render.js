@@ -176,10 +176,10 @@
 
   var loadError = function (message) {
     window.utils.closeImgUploadOverlay();
-    var errorOverlay = window.modals.showModal(document.querySelector('#error').content.querySelector('.load-error'));
+    var errorOverlay = window.modals.show(document.querySelector('#error').content.querySelector('.load-error'));
     var errorBtn = errorOverlay.querySelectorAll('.error__btn');
     errorOverlay.querySelector('.error__text').innerText = message;
-    window.modals.modalEvents(errorOverlay, errorBtn);
+    window.modals.addEvents(errorOverlay, errorBtn);
   };
 
   document.querySelector('.social__comment-count').classList.add('visually-hidden');

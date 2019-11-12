@@ -7,13 +7,13 @@
 
   window.modals = {
 
-    showModal: function (template) {
+    show: function (template) {
       var modal = template.cloneNode(true);
       document.querySelector('main').appendChild(modal);
       return modal;
     },
 
-    modalEvents: function (overlay, btns) {
+    addEvents: function (overlay, btns) {
       var btnHandler = window.utils.btnClickHandler(function () {
         overlay.remove();
       }, 'remove');
@@ -29,16 +29,16 @@
 
     uploadError: function (message) {
       window.utils.closeImgUploadOverlay();
-      var errorOverlay = window.modals.showModal(errorBlockTemplate);
+      var errorOverlay = window.modals.show(errorBlockTemplate);
       var errorBtn = errorOverlay.querySelectorAll('.error__button');
       errorOverlay.querySelector('.error__text').innerText = message;
-      window.modals.modalEvents(errorOverlay, errorBtn);
+      window.modals.addEvents(errorOverlay, errorBtn);
     },
 
     showSuccess: function () {
-      var successOverlay = window.modals.showModal(successBlockTemplate);
+      var successOverlay = window.modals.show(successBlockTemplate);
       var successBtn = successOverlay.querySelectorAll('.success__button');
-      window.modals.modalEvents(successOverlay, successBtn);
+      window.modals.addEvents(successOverlay, successBtn);
     },
 
   };

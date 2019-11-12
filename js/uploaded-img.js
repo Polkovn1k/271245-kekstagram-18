@@ -8,7 +8,7 @@
   var fileChooser = window.data.uploadInput;
   var preview = window.data.uploadedImg;
 
-  var thumbnails = function (img) {
+  var showThumbnails = function (img) {
     overlay.querySelectorAll('.effects__preview').forEach(function (item) {
       item.style.backgroundImage = 'url(' + img + ')';
     });
@@ -26,7 +26,7 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        thumbnails(reader.result);
+        showThumbnails(reader.result);
         preview.src = reader.result;
       });
 
